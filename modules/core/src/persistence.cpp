@@ -47,7 +47,12 @@
 #include <iterator>
 #include <wchar.h>
 
+#ifdef __BORLANDC__
+#define USE_ZLIB 0
+     typedef void* gzFile;
+#else
 #define USE_ZLIB 1
+#endif
 
 #ifdef __APPLE__
 #  include "TargetConditionals.h"
