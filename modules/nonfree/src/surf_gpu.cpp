@@ -49,7 +49,7 @@ using namespace cv::gpu;
 
 #if !defined (HAVE_CUDA)
 
-cv::gpu::SURF_GPU::SURF_GPU() { throw_nogpu(); }
+cv::gpu::SURF_GPU::SURF_GPU(void) { throw_nogpu(); }
 cv::gpu::SURF_GPU::SURF_GPU(double, int, int, bool, float, bool) { throw_nogpu(); }
 int cv::gpu::SURF_GPU::descriptorSize() const { throw_nogpu(); return 0;}
 void cv::gpu::SURF_GPU::uploadKeypoints(const vector<KeyPoint>&, GpuMat&) { throw_nogpu(); }

@@ -179,7 +179,13 @@ public:
 private:
     static Regression& instance();
     Regression();
+#ifdef __BORLANDC__
+public:
+#endif
     ~Regression();
+#ifdef __BORLANDC__
+private:
+#endif
 
     Regression(const Regression&);
     Regression& operator=(const Regression&);
@@ -276,6 +282,9 @@ protected:
 
     //_declareHelper declare;
 
+#ifdef __BORLANDC__
+public:
+#endif
     enum
     {
         WARMUP_READ,
@@ -283,6 +292,9 @@ protected:
         WARMUP_RNG,
         WARMUP_NONE
     };
+#ifdef __BORLANDC__
+protected:
+#endif
 
     void reportMetrics(bool toJUnitXML = false);
     static void warmup(cv::InputOutputArray a, int wtype = WARMUP_READ);

@@ -928,13 +928,13 @@ template<typename _Tp> template<typename T2> inline Mat_<_Tp>::operator Mat_<T2>
 { return Mat_<T2>(*this); }
 
 template<typename _Tp> inline Mat_<_Tp> Mat_<_Tp>::row(int y) const
-{ return Mat_(*this, Range(y, y+1), Range::all()); }
+{ return Mat_<_Tp>(*this, Range(y, y+1), Range::all()); }
 template<typename _Tp> inline Mat_<_Tp> Mat_<_Tp>::col(int x) const
-{ return Mat_(*this, Range::all(), Range(x, x+1)); }
+{ return Mat_<_Tp>(*this, Range::all(), Range(x, x+1)); }
 template<typename _Tp> inline Mat_<_Tp> Mat_<_Tp>::diag(int d) const
-{ return Mat_(Mat::diag(d)); }
+{ return Mat_<_Tp>(Mat::diag(d)); }
 template<typename _Tp> inline Mat_<_Tp> Mat_<_Tp>::clone() const
-{ return Mat_(Mat::clone()); }
+{ return Mat_<_Tp>(Mat::clone()); }
 
 template<typename _Tp> inline size_t Mat_<_Tp>::elemSize() const
 {

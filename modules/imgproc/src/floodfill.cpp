@@ -93,6 +93,9 @@ icvFloodFill_CnIR( uchar* pImage, int step, CvSize roi, CvPoint seed,
                    _Tp newVal, CvConnectedComp* region, int flags,
                    std::vector<CvFFillSegment>* buffer )
 {
+#ifdef __BORLANDC__
+    typedef typename cv::DataType<_Tp>::channel_type _CTp;
+#endif
     _Tp* img = (_Tp*)(pImage + step * seed.y);
     int i, L, R;
     int area = 0;
@@ -251,6 +254,9 @@ icvFloodFillGrad_CnIR( uchar* pImage, int step, uchar* pMask, int maskStep,
                        CvConnectedComp* region, int flags,
                        std::vector<CvFFillSegment>* buffer )
 {
+    #ifdef __BORLANDC__
+    typedef typename cv::DataType<_Tp>::channel_type _CTp;
+    #endif
     _Tp* img = (_Tp*)(pImage + step*seed.y);
     uchar* mask = (pMask += maskStep + 1) + maskStep*seed.y;
     int i, L, R;

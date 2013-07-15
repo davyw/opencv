@@ -3176,6 +3176,10 @@ const char* StringFromGTestEnv(const char* flag, const char* default_val);
 // See Message& operator<<(...) below for why.
 void operator<<(const testing::internal::Secret&, int);
 
+#ifdef __BORLANDC__
+using namespace testing;
+#endif
+
 namespace testing {
 
 // The Message class works like an ostream repeater.
@@ -17209,8 +17213,14 @@ class GTEST_API_ TestPartResult {
   std::string message_;  // The test failure message.
 };
 
+#ifdef __BORLANDC__
+}
+#endif
 // Prints a TestPartResult object.
-std::ostream& operator<<(std::ostream& os, const TestPartResult& result);
+std::ostream& operator<<(std::ostream& os, const testing::TestPartResult& result);
+#ifdef __BORLANDC__
+namespace testing {
+#endif
 
 // An array of TestPartResult objects.
 //

@@ -111,7 +111,7 @@ Thanks to:
 #  include "dvdmedia.h"
 #  include "bdaiface.h"
 #else
-#  ifdef _MSC_VER
+#  if defined(_MSC_VER) || defined(__BORLANDC__)
 #  define __extension__
    typedef BOOL WINBOOL;
 #endif

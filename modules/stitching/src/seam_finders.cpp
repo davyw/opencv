@@ -178,7 +178,7 @@ void DpSeamFinder::find(const vector<Mat> &src, const vector<Point> &corners, ve
         for (size_t j = i+1; j < src.size(); ++j)
             pairs.push_back(make_pair(i, j));
 
-    sort(pairs.begin(), pairs.end(), ImagePairLess(src, corners));
+    std::sort(pairs.begin(), pairs.end(), ImagePairLess(src, corners));
     reverse(pairs.begin(), pairs.end());
 
     for (size_t i = 0; i < pairs.size(); ++i)

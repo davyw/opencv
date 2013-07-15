@@ -8,6 +8,10 @@
 
 using namespace cv;
 
+#ifdef __BORLANDC__
+using namespace cvtest;
+#endif
+
 namespace cvtest
 {
 
@@ -2786,7 +2790,6 @@ void initUndistortMap( const Mat& _a0, const Mat& _k0, Size sz, Mat& _mapx, Mat&
     }
 }
 
-
 std::ostream& operator << (std::ostream& out, const MatInfo& m)
 {
     if( !m.m || m.m->empty() )
@@ -2801,7 +2804,6 @@ std::ostream& operator << (std::ostream& out, const MatInfo& m)
     return out;
 }
 
-
 static Mat getSubArray(const Mat& m, int border, vector<int>& ofs0, vector<int>& ofs)
 {
     ofs.resize(ofs0.size());
@@ -2812,7 +2814,7 @@ static Mat getSubArray(const Mat& m, int border, vector<int>& ofs0, vector<int>&
     }
     int i, d = m.dims;
     CV_Assert(d == (int)ofs.size());
-    vector<Range> r(d);
+    vector<cv::Range> r(d);
     for( i = 0; i < d; i++ )
     {
         r[i].start = std::max(0, ofs0[i] - border);

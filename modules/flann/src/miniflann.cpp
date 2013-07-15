@@ -26,7 +26,7 @@ IndexParams::IndexParams()
 }
 
 template<typename T>
-T getParam(const IndexParams& _p, const std::string& key, const T& defaultVal=T())
+T getParam(const cv::flann::IndexParams& _p, const std::string& key, const T& defaultVal=T())
 {
     ::cvflann::IndexParams& p = get_params(_p);
     ::cvflann::IndexParams::const_iterator it = p.find(key);
@@ -36,7 +36,7 @@ T getParam(const IndexParams& _p, const std::string& key, const T& defaultVal=T(
 }
 
 template<typename T>
-void setParam(IndexParams& _p, const std::string& key, const T& value)
+void setParam(cv::flann::IndexParams& _p, const std::string& key, const T& value)
 {
     ::cvflann::IndexParams& p = get_params(_p);
     p[key] = value;
@@ -196,20 +196,20 @@ void IndexParams::getAll(std::vector<std::string>& names,
 }
 
 
-KDTreeIndexParams::KDTreeIndexParams(int trees)
+cv::flann::KDTreeIndexParams::KDTreeIndexParams(int trees)
 {
     ::cvflann::IndexParams& p = get_params(*this);
     p["algorithm"] = FLANN_INDEX_KDTREE;
     p["trees"] = trees;
 }
 
-LinearIndexParams::LinearIndexParams()
+cv::flann::LinearIndexParams::LinearIndexParams()
 {
     ::cvflann::IndexParams& p = get_params(*this);
     p["algorithm"] = FLANN_INDEX_LINEAR;
 }
 
-CompositeIndexParams::CompositeIndexParams(int trees, int branching, int iterations,
+cv::flann::CompositeIndexParams::CompositeIndexParams(int trees, int branching, int iterations,
                              flann_centers_init_t centers_init, float cb_index )
 {
     ::cvflann::IndexParams& p = get_params(*this);
@@ -226,7 +226,7 @@ CompositeIndexParams::CompositeIndexParams(int trees, int branching, int iterati
     p["cb_index"] = cb_index;
 }
 
-AutotunedIndexParams::AutotunedIndexParams(float target_precision, float build_weight,
+cv::flann::AutotunedIndexParams::AutotunedIndexParams(float target_precision, float build_weight,
                                            float memory_weight, float sample_fraction)
 {
     ::cvflann::IndexParams& p = get_params(*this);
@@ -242,7 +242,7 @@ AutotunedIndexParams::AutotunedIndexParams(float target_precision, float build_w
 }
 
 
-KMeansIndexParams::KMeansIndexParams(int branching, int iterations,
+cv::flann::KMeansIndexParams::KMeansIndexParams(int branching, int iterations,
                   flann_centers_init_t centers_init, float cb_index )
 {
     ::cvflann::IndexParams& p = get_params(*this);
@@ -257,7 +257,7 @@ KMeansIndexParams::KMeansIndexParams(int branching, int iterations,
     p["cb_index"] = cb_index;
 }
 
-HierarchicalClusteringIndexParams::HierarchicalClusteringIndexParams(int branching ,
+cv::flann::HierarchicalClusteringIndexParams::HierarchicalClusteringIndexParams(int branching ,
                                       flann_centers_init_t centers_init,
                                       int trees, int leaf_size)
 {
@@ -273,7 +273,7 @@ HierarchicalClusteringIndexParams::HierarchicalClusteringIndexParams(int branchi
     p["leaf_size"] = leaf_size;
 }
 
-LshIndexParams::LshIndexParams(int table_number, int key_size, int multi_probe_level)
+cv::flann::LshIndexParams::LshIndexParams(int table_number, int key_size, int multi_probe_level)
 {
     ::cvflann::IndexParams& p = get_params(*this);
     p["algorithm"] = FLANN_INDEX_LSH;
@@ -285,7 +285,7 @@ LshIndexParams::LshIndexParams(int table_number, int key_size, int multi_probe_l
     p["multi_probe_level"] = multi_probe_level;
 }
 
-SavedIndexParams::SavedIndexParams(const std::string& _filename)
+cv::flann::SavedIndexParams::SavedIndexParams(const std::string& _filename)
 {
     std::string filename = _filename;
     ::cvflann::IndexParams& p = get_params(*this);
@@ -294,7 +294,7 @@ SavedIndexParams::SavedIndexParams(const std::string& _filename)
     p["filename"] = filename;
 }
 
-SearchParams::SearchParams( int checks, float eps, bool sorted )
+cv::flann::SearchParams::SearchParams( int checks, float eps, bool sorted )
 {
     ::cvflann::IndexParams& p = get_params(*this);
 
@@ -308,7 +308,7 @@ SearchParams::SearchParams( int checks, float eps, bool sorted )
 
 
 template<typename Distance, typename IndexType> void
-buildIndex_(void*& index, const Mat& data, const IndexParams& params, const Distance& dist = Distance())
+buildIndex_(void*& index, const Mat& data, const cv::flann::IndexParams& params, const Distance& dist = Distance())
 {
     typedef typename Distance::ElementType ElementType;
     if(DataType<ElementType>::type != data.type())
@@ -323,7 +323,7 @@ buildIndex_(void*& index, const Mat& data, const IndexParams& params, const Dist
 }
 
 template<typename Distance> void
-buildIndex(void*& index, const Mat& data, const IndexParams& params, const Distance& dist = Distance())
+buildIndex(void*& index, const Mat& data, const cv::flann::IndexParams& params, const Distance& dist = Distance())
 {
     buildIndex_<Distance, ::cvflann::Index<Distance> >(index, data, params, dist);
 }
@@ -334,7 +334,7 @@ typedef ::cvflann::Hamming<uchar> HammingDistance;
 typedef ::cvflann::HammingLUT2 HammingDistance;
 #endif
 
-Index::Index()
+cv::flann::Index::Index()
 {
     index = 0;
     featureType = CV_32F;
@@ -342,7 +342,7 @@ Index::Index()
     distType = FLANN_DIST_L2;
 }
 
-Index::Index(InputArray _data, const IndexParams& params, flann_distance_t _distType)
+cv::flann::Index::Index(InputArray _data, const cv::flann::IndexParams& params, flann_distance_t _distType)
 {
     index = 0;
     featureType = CV_32F;
@@ -351,7 +351,7 @@ Index::Index(InputArray _data, const IndexParams& params, flann_distance_t _dist
     build(_data, params, _distType);
 }
 
-void Index::build(InputArray _data, const IndexParams& params, flann_distance_t _distType)
+void cv::flann::Index::build(InputArray _data, const cv::flann::IndexParams& params, flann_distance_t _distType)
 {
     release();
     algo = getParam<flann_algorithm_t>(params, "algorithm", FLANN_INDEX_LINEAR);
@@ -414,12 +414,12 @@ template<typename Distance> void deleteIndex(void* index)
     deleteIndex_< ::cvflann::Index<Distance> >(index);
 }
 
-Index::~Index()
+cv::flann::Index::~Index()
 {
     release();
 }
 
-void Index::release()
+void cv::flann::Index::release()
 {
     if( !index )
         return;
@@ -460,7 +460,7 @@ void Index::release()
 
 template<typename Distance, typename IndexType>
 void runKnnSearch_(void* index, const Mat& query, Mat& indices, Mat& dists,
-                  int knn, const SearchParams& params)
+                  int knn, const cv::flann::SearchParams& params)
 {
     typedef typename Distance::ElementType ElementType;
     typedef typename Distance::ResultType DistanceType;
@@ -479,14 +479,14 @@ void runKnnSearch_(void* index, const Mat& query, Mat& indices, Mat& dists,
 
 template<typename Distance>
 void runKnnSearch(void* index, const Mat& query, Mat& indices, Mat& dists,
-                  int knn, const SearchParams& params)
+                  int knn, const cv::flann::SearchParams& params)
 {
     runKnnSearch_<Distance, ::cvflann::Index<Distance> >(index, query, indices, dists, knn, params);
 }
 
 template<typename Distance, typename IndexType>
 int runRadiusSearch_(void* index, const Mat& query, Mat& indices, Mat& dists,
-                    double radius, const SearchParams& params)
+                    double radius, const cv::flann::SearchParams& params)
 {
     typedef typename Distance::ElementType ElementType;
     typedef typename Distance::ResultType DistanceType;
@@ -506,7 +506,7 @@ int runRadiusSearch_(void* index, const Mat& query, Mat& indices, Mat& dists,
 
 template<typename Distance>
 int runRadiusSearch(void* index, const Mat& query, Mat& indices, Mat& dists,
-                     double radius, const SearchParams& params)
+                     double radius, const cv::flann::SearchParams& params)
 {
     return runRadiusSearch_<Distance, ::cvflann::Index<Distance> >(index, query, indices, dists, radius, params);
 }
@@ -548,8 +548,8 @@ static void createIndicesDists(OutputArray _indices, OutputArray _dists,
 }
 
 
-void Index::knnSearch(InputArray _query, OutputArray _indices,
-               OutputArray _dists, int knn, const SearchParams& params)
+void cv::flann::Index::knnSearch(InputArray _query, OutputArray _indices,
+               OutputArray _dists, int knn, const cv::flann::SearchParams& params)
 {
     Mat query = _query.getMat(), indices, dists;
     int dtype = distType == FLANN_DIST_HAMMING ? CV_32S : CV_32F;
@@ -589,9 +589,9 @@ void Index::knnSearch(InputArray _query, OutputArray _indices,
     }
 }
 
-int Index::radiusSearch(InputArray _query, OutputArray _indices,
+int cv::flann::Index::radiusSearch(InputArray _query, OutputArray _indices,
                         OutputArray _dists, double radius, int maxResults,
-                        const SearchParams& params)
+                        const cv::flann::SearchParams& params)
 {
     Mat query = _query.getMat(), indices, dists;
     int dtype = distType == FLANN_DIST_HAMMING ? CV_32S : CV_32F;
@@ -628,17 +628,17 @@ int Index::radiusSearch(InputArray _query, OutputArray _indices,
     return -1;
 }
 
-flann_distance_t Index::getDistance() const
+flann_distance_t cv::flann::Index::getDistance() const
 {
     return distType;
 }
 
-flann_algorithm_t Index::getAlgorithm() const
+flann_algorithm_t cv::flann::Index::getAlgorithm() const
 {
     return algo;
 }
 
-template<typename IndexType> void saveIndex_(const Index* index0, const void* index, FILE* fout)
+template<typename IndexType> void saveIndex_(const cv::flann::Index* index0, const void* index, FILE* fout)
 {
     IndexType* _index = (IndexType*)index;
     ::cvflann::save_header(fout, *_index);
@@ -649,12 +649,12 @@ template<typename IndexType> void saveIndex_(const Index* index0, const void* in
     _index->saveIndex(fout);
 }
 
-template<typename Distance> void saveIndex(const Index* index0, const void* index, FILE* fout)
+template<typename Distance> void saveIndex(const cv::flann::Index* index0, const void* index, FILE* fout)
 {
     saveIndex_< ::cvflann::Index<Distance> >(index0, index, fout);
 }
 
-void Index::save(const std::string& filename) const
+void cv::flann::Index::save(const std::string& filename) const
 {
     FILE* fout = fopen(filename.c_str(), "wb");
     if (fout == NULL)
@@ -699,7 +699,7 @@ void Index::save(const std::string& filename) const
 
 
 template<typename Distance, typename IndexType>
-bool loadIndex_(Index* index0, void*& index, const Mat& data, FILE* fin, const Distance& dist=Distance())
+bool loadIndex_(cv::flann::Index* index0, void*& index, const Mat& data, FILE* fin, const Distance& dist=Distance())
 {
     typedef typename Distance::ElementType ElementType;
     CV_Assert(DataType<ElementType>::type == data.type() && data.isContinuous());
@@ -715,12 +715,12 @@ bool loadIndex_(Index* index0, void*& index, const Mat& data, FILE* fin, const D
 }
 
 template<typename Distance>
-bool loadIndex(Index* index0, void*& index, const Mat& data, FILE* fin, const Distance& dist=Distance())
+bool loadIndex(cv::flann::Index* index0, void*& index, const Mat& data, FILE* fin, const Distance& dist=Distance())
 {
     return loadIndex_<Distance, ::cvflann::Index<Distance> >(index0, index, data, fin, dist);
 }
 
-bool Index::load(InputArray _data, const std::string& filename)
+bool cv::flann::Index::load(InputArray _data, const std::string& filename)
 {
     Mat data = _data.getMat();
     bool ok = true;

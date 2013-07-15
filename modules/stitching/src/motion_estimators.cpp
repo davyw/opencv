@@ -803,7 +803,7 @@ void findMaxSpanningTree(int num_images, const vector<MatchesInfo> &pairwise_mat
     vector<int> span_tree_powers(num_images, 0);
 
     // Find maximum spanning tree
-    sort(edges.begin(), edges.end(), greater<GraphEdge>());
+    std::sort(edges.begin(), edges.end(), greater<GraphEdge>());
     for (size_t i = 0; i < edges.size(); ++i)
     {
         int comp1 = comps.findSetByElem(edges[i].from);

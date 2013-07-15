@@ -98,18 +98,18 @@ template <> inline void incWithWeight(int* estimation, int weight, Vec3b p) {
 
 template <typename T> static inline T saturateCastFromArray(int* estimation);
 
-template <> inline uchar saturateCastFromArray(int* estimation) {
+template <> inline uchar saturateCastFromArray<uchar>(int* estimation) {
     return saturate_cast<uchar>(estimation[0]);
 }
 
-template <> inline Vec2b saturateCastFromArray(int* estimation) {
+template <> inline Vec2b saturateCastFromArray<Vec2b>(int* estimation) {
     Vec2b res;
     res[0] = saturate_cast<uchar>(estimation[0]);
     res[1] = saturate_cast<uchar>(estimation[1]);
     return res;
 }
 
-template <> inline Vec3b saturateCastFromArray(int* estimation) {
+template <> inline Vec3b saturateCastFromArray<Vec3b>(int* estimation) {
     Vec3b res;
     res[0] = saturate_cast<uchar>(estimation[0]);
     res[1] = saturate_cast<uchar>(estimation[1]);

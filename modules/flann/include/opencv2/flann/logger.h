@@ -44,12 +44,18 @@ class Logger
 {
     Logger() : stream(stdout), logLevel(FLANN_LOG_WARN) {}
 
+#ifdef __BORLANDC__
+public:
+#endif
     ~Logger()
     {
         if ((stream!=NULL)&&(stream!=stdout)) {
             fclose(stream);
         }
     }
+#ifdef __BORLANDC__
+private:
+#endif
 
     static Logger& instance()
     {

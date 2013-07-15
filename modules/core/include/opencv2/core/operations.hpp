@@ -1007,7 +1007,11 @@ CV_EXPORTS int normL1_(const uchar* a, const uchar* b, int n);
 CV_EXPORTS int normHamming(const uchar* a, const uchar* b, int n);
 CV_EXPORTS int normHamming(const uchar* a, const uchar* b, int n, int cellSize);
 
+#ifdef __BORLANDC__
+template<> inline float normL2Sqr<float,float>(const float* a, const float* b, int n)
+#else
 template<> inline float normL2Sqr(const float* a, const float* b, int n)
+#endif
 {
     if( n >= 8 )
         return normL2Sqr_(a, b, n);
@@ -2715,22 +2719,38 @@ CV_EXPORTS void writeScalar( FileStorage& fs, float value );
 CV_EXPORTS void writeScalar( FileStorage& fs, double value );
 CV_EXPORTS void writeScalar( FileStorage& fs, const string& value );
 
+#ifdef __BORLANDC__
+template<> inline void write<int>( FileStorage& fs, const int& value )
+#else
 template<> inline void write( FileStorage& fs, const int& value )
+#endif
 {
     writeScalar(fs, value);
 }
 
+#ifdef __BORLANDC__
+template<> inline void write<float>( FileStorage& fs, const float& value )
+#else
 template<> inline void write( FileStorage& fs, const float& value )
+#endif
 {
     writeScalar(fs, value);
 }
 
+#ifdef __BORLANDC__
+template<> inline void write<double>( FileStorage& fs, const double& value )
+#else
 template<> inline void write( FileStorage& fs, const double& value )
+#endif
 {
     writeScalar(fs, value);
 }
 
+#ifdef __BORLANDC__
+template<> inline void write<string>( FileStorage& fs, const string& value )
+#else
 template<> inline void write( FileStorage& fs, const string& value )
+#endif
 {
     writeScalar(fs, value);
 }
@@ -2784,8 +2804,13 @@ template<typename _Tp> inline void write(FileStorage& fs, const Scalar_<_Tp>& s 
 
 inline void write(FileStorage& fs, const Range& r )
 {
+    #ifdef __BORLANDC__
+    write<int>(fs, r.start);
+    write<int>(fs, r.end);
+    #else
     write(fs, r.start);
     write(fs, r.end);
+    #endif
 }
 
 class CV_EXPORTS WriteStructContext
@@ -3097,8 +3122,13 @@ inline FileNodeIterator FileNode::end() const
 inline FileNode FileNodeIterator::operator *() const
 { return FileNode(fs, (const CvFileNode*)reader.ptr); }
 
+#ifdef __BORLANDC__
+inline FileNode* FileNodeIterator::operator ->() const
+{ return new FileNode(fs, (const CvFileNode*)reader.ptr); }
+#else
 inline FileNode FileNodeIterator::operator ->() const
 { return FileNode(fs, (const CvFileNode*)reader.ptr); }
+#endif
 
 template<typename _Tp> static inline FileNodeIterator& operator >> (FileNodeIterator& it, _Tp& value)
 { read( *it, value, _Tp()); return ++it; }

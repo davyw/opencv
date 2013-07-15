@@ -166,7 +166,7 @@ struct CV_EXPORTS MatInfo
     const Mat* m;
 };
 
-CV_EXPORTS std::ostream& operator << (std::ostream& out, const MatInfo& m);
+CV_EXPORTS std::ostream& operator << (std::ostream& out, const cvtest::MatInfo& m);
 
 struct CV_EXPORTS MatComparator
 {

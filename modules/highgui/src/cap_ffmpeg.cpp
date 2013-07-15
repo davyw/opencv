@@ -68,7 +68,9 @@ public:
         static icvInitFFMPEG init;
     }
 
+#ifndef __BORLANDC__
 private:
+#endif
     #if defined WIN32 || defined _WIN32
     HMODULE icvFFOpenCV;
 
