@@ -195,8 +195,8 @@ inline int fast_abs(schar v) { return std::abs((int)v); }
 inline int fast_abs(ushort v) { return v; }
 inline int fast_abs(short v) { return std::abs((int)v); }
 inline int fast_abs(int v) { return std::abs(v); }
-inline float fast_abs(float v) { return std::abs(v); }
-inline double fast_abs(double v) { return std::abs(v); }
+inline float fast_abs(float v) { return std::abs<float>(v); }
+inline double fast_abs(double v) { return std::abs<double>(v); }
 
 //////////////////////////////// Matx /////////////////////////////////
 
@@ -1030,18 +1030,18 @@ _AccTp normL1(const _Tp* a, const _Tp* b, int n)
     for(; i <= n - 4; i += 4 )
     {
         _AccTp v0 = _AccTp(a[i] - b[i]), v1 = _AccTp(a[i+1] - b[i+1]), v2 = _AccTp(a[i+2] - b[i+2]), v3 = _AccTp(a[i+3] - b[i+3]);
-        s += std::abs(v0) + std::abs(v1) + std::abs(v2) + std::abs(v3);
+        s += std::abs<_AccTp>(v0) + std::abs<_AccTp>(v1) + std::abs<_AccTp>(v2) + std::abs<_AccTp>(v3);
     }
 #endif
     for( ; i < n; i++ )
     {
         _AccTp v = _AccTp(a[i] - b[i]);
-        s += std::abs(v);
+        s += std::abs<_AccTp>(v);
     }
     return s;
 }
 
-template<> inline float normL1(const float* a, const float* b, int n)
+template<> inline float normL1<float, float>(const float* a, const float* b, int n)
 {
     if( n >= 8 )
         return normL1_(a, b, n);
@@ -1049,12 +1049,12 @@ template<> inline float normL1(const float* a, const float* b, int n)
     for( int i = 0; i < n; i++ )
     {
         float v = a[i] - b[i];
-        s += std::abs(v);
+        s += std::abs<float>(v);
     }
     return s;
 }
 
-template<> inline int normL1(const uchar* a, const uchar* b, int n)
+template<> inline int normL1<uchar, int>(const uchar* a, const uchar* b, int n)
 {
     return normL1_(a, b, n);
 }
@@ -1066,7 +1066,7 @@ _AccTp normInf(const _Tp* a, const _Tp* b, int n)
     for( int i = 0; i < n; i++ )
     {
         _AccTp v0 = a[i] - b[i];
-        s = std::max(s, std::abs(v0));
+        s = std::max(s, std::abs<_AccTp>(v0));
     }
     return s;
 }

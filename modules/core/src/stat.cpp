@@ -910,13 +910,13 @@ float normL1_(const float* a, const float* b, int n)
     {
         for( ; j <= n - 4; j += 4 )
         {
-            d += std::abs(a[j] - b[j]) + std::abs(a[j+1] - b[j+1]) +
-                    std::abs(a[j+2] - b[j+2]) + std::abs(a[j+3] - b[j+3]);
+            d += std::abs<float>(a[j] - b[j]) + std::abs<float>(a[j+1] - b[j+1]) +
+                 std::abs<float>(a[j+2] - b[j+2]) + std::abs<float>(a[j+3] - b[j+3]);
         }
     }
 
     for( ; j < n; j++ )
-        d += std::abs(a[j] - b[j]);
+        d += std::abs<float>(a[j] - b[j]);
     return d;
 }
 
@@ -1171,7 +1171,7 @@ normDiffInf_(const T* src1, const T* src2, const uchar* mask, ST* _result, int l
             if( mask[i] )
             {
                 for( int k = 0; k < cn; k++ )
-                    result = std::max(result, (ST)std::abs(src1[k] - src2[k]));
+                    result = std::max(result, std::abs<ST>(src1[k] - src2[k]));
             }
     }
     *_result = result;
@@ -1192,7 +1192,7 @@ normDiffL1_(const T* src1, const T* src2, const uchar* mask, ST* _result, int le
             if( mask[i] )
             {
                 for( int k = 0; k < cn; k++ )
-                    result += std::abs(src1[k] - src2[k]);
+                    result += std::abs<ST>(src1[k] - src2[k]);
             }
     }
     *_result = result;

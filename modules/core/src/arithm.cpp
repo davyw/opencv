@@ -473,7 +473,7 @@ template<typename T> struct OpAbsDiff
     typedef T type1;
     typedef T type2;
     typedef T rtype;
-    T operator()(T a, T b) const { return (T)std::abs(a - b); }
+    T operator()(T a, T b) const { return (T)std::abs<T>(a - b); }
 };
 
 template<> inline short OpAbsDiff<short>::operator ()(short a, short b) const

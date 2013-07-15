@@ -138,7 +138,7 @@ isSymmetric_(InputArray src, double eps) {
         for (int j = 0; j < _src.cols; j++) {
             _Tp a = _src.at<_Tp> (i, j);
             _Tp b = _src.at<_Tp> (j, i);
-            if (std::abs(a - b) > eps) {
+            if (std::abs<_Tp>(a - b) > eps) {
                 return false;
             }
         }
@@ -303,7 +303,7 @@ private:
 
     void cdiv(double xr, double xi, double yr, double yi) {
         double r, dv;
-        if (std::abs(yr) > std::abs(yi)) {
+        if (std::abs<double>(yr) > std::abs<double>(yi)) {
             r = yi / yr;
             dv = yr + r * yi;
             cdivr = (xr + r * xi) / dv;
@@ -343,7 +343,7 @@ private:
                 e[i] = 0.0;
             }
             for (int j = max(i - 1, 0); j < nn; j++) {
-                norm = norm + std::abs(H[i][j]);
+                norm = norm + std::abs<double>(H[i][j]);
             }
         }
 
@@ -354,11 +354,11 @@ private:
             // Look for single small sub-diagonal element
             int l = n1;
             while (l > low) {
-                s = std::abs(H[l - 1][l - 1]) + std::abs(H[l][l]);
+                s = std::abs<double>(H[l - 1][l - 1]) + std::abs<double>(H[l][l]);
                 if (s == 0.0) {
                     s = norm;
                 }
-                if (std::abs(H[l][l - 1]) < eps * s) {
+                if (std::abs<double>(H[l][l - 1]) < eps * s) {
                     break;
                 }
                 l--;
@@ -380,7 +380,7 @@ private:
                 w = H[n1][n1 - 1] * H[n1 - 1][n1];
                 p = (H[n1 - 1][n1 - 1] - H[n1][n1]) / 2.0;
                 q = p * p + w;
-                z = sqrt(std::abs(q));
+                z = sqrt(std::abs<double>(q));
                 H[n1][n1] = H[n1][n1] + exshift;
                 H[n1 - 1][n1 - 1] = H[n1 - 1][n1 - 1] + exshift;
                 x = H[n1][n1];
@@ -401,7 +401,7 @@ private:
                     e[n1 - 1] = 0.0;
                     e[n1] = 0.0;
                     x = H[n1][n1 - 1];
-                    s = std::abs(x) + std::abs(z);
+                    s = std::abs<double>(x) + std::abs<double>(z);
                     p = x / s;
                     q = z / s;
                     r = sqrt(p * p + q * q);
@@ -464,7 +464,7 @@ private:
                     for (int i = low; i <= n1; i++) {
                         H[i][i] -= x;
                     }
-                    s = std::abs(H[n1][n1 - 1]) + std::abs(H[n1 - 1][n1 - 2]);
+                    s = std::abs<double>(H[n1][n1 - 1]) + std::abs<double>(H[n1 - 1][n1 - 2]);
                     x = y = 0.75 * s;
                     w = -0.4375 * s * s;
                 }
@@ -499,15 +499,15 @@ private:
                     p = (r * s - w) / H[m + 1][m] + H[m][m + 1];
                     q = H[m + 1][m + 1] - z - r - s;
                     r = H[m + 2][m + 1];
-                    s = std::abs(p) + std::abs(q) + std::abs(r);
+                    s = std::abs<double>(p) + std::abs<double>(q) + std::abs<double>(r);
                     p = p / s;
                     q = q / s;
                     r = r / s;
                     if (m == l) {
                         break;
                     }
-                    if (std::abs(H[m][m - 1]) * (std::abs(q) + std::abs(r)) < eps * (std::abs(p)
-                                                                                     * (std::abs(H[m - 1][m - 1]) + std::abs(z) + std::abs(
+                    if (std::abs<double>(H[m][m - 1]) * (std::abs<double>(q) + std::abs<double>(r)) < eps * (std::abs<double>(p)
+                                                                                     * (std::abs<double>(H[m - 1][m - 1]) + std::abs<double>(z) + std::abs<double>(
                                                                                                                                            H[m + 1][m + 1])))) {
                         break;
                     }
@@ -529,7 +529,7 @@ private:
                         p = H[k][k - 1];
                         q = H[k + 1][k - 1];
                         r = (notlast ? H[k + 2][k - 1] : 0.0);
-                        x = std::abs(p) + std::abs(q) + std::abs(r);
+                        x = std::abs<double>(p) + std::abs<double>(q) + std::abs<double>(r);
                         if (x != 0.0) {
                             p = p / x;
                             q = q / x;
@@ -637,7 +637,7 @@ private:
                             q = (d[i] - p) * (d[i] - p) + e[i] * e[i];
                             t = (x * s - z * r) / q;
                             H[i][n1] = t;
-                            if (std::abs(x) > std::abs(z)) {
+                            if (std::abs<double>(x) > std::abs<double>(z)) {
                                 H[i + 1][n1] = (-r - w * t) / x;
                             } else {
                                 H[i + 1][n1] = (-s - y * t) / z;
@@ -646,7 +646,7 @@ private:
 
                         // Overflow control
 
-                        t = std::abs(H[i][n1]);
+                        t = std::abs<double>(H[i][n1]);
                         if ((eps * t) * t > 1) {
                             for (int j = i; j <= n1; j++) {
                                 H[j][n1] = H[j][n1] / t;
@@ -660,7 +660,7 @@ private:
 
                 // Last vector component imaginary so matrix is triangular
 
-                if (std::abs(H[n1][n1 - 1]) > std::abs(H[n1 - 1][n1])) {
+                if (std::abs<double>(H[n1][n1 - 1]) > std::abs<double>(H[n1 - 1][n1])) {
                     H[n1 - 1][n1 - 1] = q / H[n1][n1 - 1];
                     H[n1 - 1][n1] = -(H[n1][n1] - p) / H[n1][n1 - 1];
                 } else {
@@ -699,14 +699,14 @@ private:
                             vr = (d[i] - p) * (d[i] - p) + e[i] * e[i] - q * q;
                             vi = (d[i] - p) * 2.0 * q;
                             if (vr == 0.0 && vi == 0.0) {
-                                vr = eps * norm * (std::abs(w) + std::abs(q) + std::abs(x)
-                                                   + std::abs(y) + std::abs(z));
+                                vr = eps * norm * (std::abs<double>(w) + std::abs<double>(q) + std::abs<double>(x)
+                                                   + std::abs<double>(y) + std::abs<double>(z));
                             }
                             cdiv(x * r - z * ra + q * sa,
                                  x * s - z * sa - q * ra, vr, vi);
                             H[i][n1 - 1] = cdivr;
                             H[i][n1] = cdivi;
-                            if (std::abs(x) > (std::abs(z) + std::abs(q))) {
+                            if (std::abs<double>(x) > (std::abs<double>(z) + std::abs<double>(q))) {
                                 H[i + 1][n1 - 1] = (-ra - w * H[i][n1 - 1] + q
                                                    * H[i][n1]) / x;
                                 H[i + 1][n1] = (-sa - w * H[i][n1] - q * H[i][n1
@@ -721,7 +721,7 @@ private:
 
                         // Overflow control
 
-                        t = max(std::abs(H[i][n1 - 1]), std::abs(H[i][n1]));
+                        t = max(std::abs<double>(H[i][n1 - 1]), std::abs<double>(H[i][n1]));
                         if ((eps * t) * t > 1) {
                             for (int j = i; j <= n1; j++) {
                                 H[j][n1 - 1] = H[j][n1 - 1] / t;
@@ -771,7 +771,7 @@ private:
 
             double scale = 0.0;
             for (int i = m; i <= high; i++) {
-                scale = scale + std::abs(H[i][m - 1]);
+                scale = scale + std::abs<double>(H[i][m - 1]);
             }
             if (scale != 0.0) {
 

@@ -199,7 +199,7 @@ struct ResponseComparator
 {
     bool operator() (const KeyPoint& a, const KeyPoint& b)
     {
-        return std::abs(a.response) > std::abs(b.response);
+        return std::abs<float>(a.response) > std::abs<float>(b.response);
     }
 };
 

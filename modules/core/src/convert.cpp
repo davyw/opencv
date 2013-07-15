@@ -586,16 +586,16 @@ cvtScaleAbs_( const T* src, size_t sstep,
         for( ; x <= size.width - 4; x += 4 )
         {
             DT t0, t1;
-            t0 = saturate_cast<DT>(std::abs(src[x]*scale + shift));
-            t1 = saturate_cast<DT>(std::abs(src[x+1]*scale + shift));
+            t0 = saturate_cast<DT>(std::abs<DT>(src[x]*scale + shift));
+            t1 = saturate_cast<DT>(std::abs<DT>(src[x+1]*scale + shift));
             dst[x] = t0; dst[x+1] = t1;
-            t0 = saturate_cast<DT>(std::abs(src[x+2]*scale + shift));
-            t1 = saturate_cast<DT>(std::abs(src[x+3]*scale + shift));
+            t0 = saturate_cast<DT>(std::abs<DT>(src[x+2]*scale + shift));
+            t1 = saturate_cast<DT>(std::abs<DT>(src[x+3]*scale + shift));
             dst[x+2] = t0; dst[x+3] = t1;
         }
         #endif
         for( ; x < size.width; x++ )
-            dst[x] = saturate_cast<DT>(std::abs(src[x]*scale + shift));
+            dst[x] = saturate_cast<DT>(std::abs<DT>(src[x]*scale + shift));
     }
 }
 

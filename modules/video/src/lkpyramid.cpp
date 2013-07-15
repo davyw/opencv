@@ -430,8 +430,8 @@ void cv::detail::LKTrackerInvoker::operator()(const Range& range) const
             if( delta.ddot(delta) <= criteria.epsilon )
                 break;
 
-            if( j > 0 && std::abs(delta.x + prevDelta.x) < 0.01 &&
-               std::abs(delta.y + prevDelta.y) < 0.01 )
+            if( j > 0 && std::abs<float>(delta.x + prevDelta.x) < 0.01 &&
+               std::abs<float>(delta.y + prevDelta.y) < 0.01 )
             {
                 nextPts[ptidx] -= delta*0.5f;
                 break;
@@ -473,7 +473,7 @@ void cv::detail::LKTrackerInvoker::operator()(const Range& range) const
                     int diff = CV_DESCALE(Jptr[x]*iw00 + Jptr[x+cn]*iw01 +
                                           Jptr[x+stepJ]*iw10 + Jptr[x+stepJ+cn]*iw11,
                                           W_BITS1-5) - Iptr[x];
-                    errval += std::abs((float)diff);
+                    errval += std::abs<float>((float)diff);
                 }
             }
             err[ptidx] = errval * 1.f/(32*winSize.width*cn*winSize.height);

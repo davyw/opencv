@@ -258,7 +258,7 @@ int computeCorresp( const Mat& K, const Mat& K_inv, const Mat& Rt,
                 if( r.contains(Point(u0,v0)) )
                 {
                     float d0 = depth0.at<float>(v0,u0);
-                    if( !cvIsNaN(d0) && std::abs(transformed_d1 - d0) <= maxDepthDiff )
+                    if( !cvIsNaN(d0) && std::abs<float>(transformed_d1 - d0) <= maxDepthDiff )
                     {
                         int c = corresps.at<int>(v0,u0);
                         if( c != -1 )
@@ -459,7 +459,7 @@ bool computeKsi( int transformType,
 
                 double diff = static_cast<double>(image1.at<uchar>(v1,u1)) -
                               static_cast<double>(image0.at<uchar>(v0,u0));
-                double w = sigma + std::abs(diff);
+                double w = sigma + std::abs<double>(diff);
                 w = w > DBL_EPSILON ? 1./w : 1.;
 
                 (*computeCFuncPtr)( (double*)C.ptr(pointCount),

@@ -56,7 +56,7 @@ static const float atan2_p7 = -0.04432655554792128f*(float)(180/CV_PI);
 
 float fastAtan2( float y, float x )
 {
-    float ax = std::abs(x), ay = std::abs(y);
+    float ax = std::abs<float>(x), ay = std::abs<float>(y);
     float a, c, c2;
     if( ax >= ay )
     {
@@ -130,7 +130,7 @@ static void FastAtan2_32f(const float *Y, const float *X, float *angle, int len,
     for( ; i < len; i++ )
     {
         float x = X[i], y = Y[i];
-        float ax = std::abs(x), ay = std::abs(y);
+        float ax = std::abs<float>(x), ay = std::abs<float>(y);
         float a, c, c2;
         if( ax >= ay )
         {

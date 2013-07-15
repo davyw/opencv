@@ -246,7 +246,7 @@ interpolateKeypoint( float N9[3][9], int dx, int dy, int ds, KeyPoint& kpt )
     Vec3f x = A.solve(b, DECOMP_LU);
 
     bool ok = (x[0] != 0 || x[1] != 0 || x[2] != 0) &&
-        std::abs(x[0]) <= 1 && std::abs(x[1]) <= 1 && std::abs(x[2]) <= 1;
+        std::abs<float>(x[0]) <= 1 && std::abs<float>(x[1]) <= 1 && std::abs<float>(x[2]) <= 1;
 
     if( ok )
     {

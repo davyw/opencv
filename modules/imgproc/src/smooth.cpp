@@ -820,7 +820,7 @@ cv::Ptr<cv::FilterEngine> cv::createGaussianFilter( int type, Size ksize,
 
     Mat kx = getGaussianKernel( ksize.width, sigma1, std::max(depth, CV_32F) );
     Mat ky;
-    if( ksize.height == ksize.width && std::abs(sigma1 - sigma2) < DBL_EPSILON )
+    if( ksize.height == ksize.width && std::abs<double>(sigma1 - sigma2) < DBL_EPSILON )
         ky = kx;
     else
         ky = getGaussianKernel( ksize.height, sigma2, std::max(depth, CV_32F) );
@@ -1768,7 +1768,7 @@ public:
                     for( ; k < maxk; k++ )
                     {
                         int val = sptr[j + space_ofs[k]];
-                        float w = space_weight[k]*color_weight[std::abs(val - val0)];
+                        float w = space_weight[k]*color_weight[std::abs<int>(val - val0)];
                         sum += val*w;
                         wsum += w;
                     }
@@ -1837,8 +1837,8 @@ public:
                     {
                         const uchar* sptr_k = sptr + j + space_ofs[k];
                         int b = sptr_k[0], g = sptr_k[1], r = sptr_k[2];
-                        float w = space_weight[k]*color_weight[std::abs(b - b0) +
-                                                               std::abs(g - g0) + std::abs(r - r0)];
+                        float w = space_weight[k]*color_weight[std::abs<int>(b - b0) +
+                                                               std::abs<int>(g - g0) + std::abs<int>(r - r0)];
                         sum_b += b*w; sum_g += g*w; sum_r += r*w;
                         wsum += w;
                     }
@@ -1997,7 +1997,7 @@ public:
                     for( ; k < maxk; k++ )
                     {
                         float val = sptr[j + space_ofs[k]];
-                        float alpha = (float)(std::abs(val - val0)*scale_index);
+                        float alpha = (float)(std::abs<float>(val - val0)*scale_index);
                         int idx = cvFloor(alpha);
                         alpha -= idx;
                         float w = space_weight[k]*(expLUT[idx] + alpha*(expLUT[idx+1] - expLUT[idx]));
@@ -2075,8 +2075,8 @@ public:
                     {
                         const float* sptr_k = sptr + j + space_ofs[k];
                         float b = sptr_k[0], g = sptr_k[1], r = sptr_k[2];
-                        float alpha = (float)((std::abs(b - b0) +
-                            std::abs(g - g0) + std::abs(r - r0))*scale_index);
+                        float alpha = (float)((std::abs<float>(b - b0) +
+                            std::abs<float>(g - g0) + std::abs<float>(r - r0))*scale_index);
                         int idx = cvFloor(alpha);
                         alpha -= idx;
                         float w = space_weight[k]*(expLUT[idx] + alpha*(expLUT[idx+1] - expLUT[idx]));
@@ -2136,7 +2136,7 @@ bilateralFilter_32f( const Mat& src, Mat& dst, int d,
     // compute the min/max range for the input image (even if multichannel)
 
     minMaxLoc( src.reshape(1), &minValSrc, &maxValSrc );
-    if(std::abs(minValSrc - maxValSrc) < FLT_EPSILON)
+    if(std::abs<double>(minValSrc - maxValSrc) < FLT_EPSILON)
     {
         src.copyTo(dst);
         return;

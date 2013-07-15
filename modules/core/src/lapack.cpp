@@ -65,10 +65,10 @@ LUImpl(_Tp* A, size_t astep, int m, _Tp* b, size_t bstep, int n)
         k = i;
 
         for( j = i+1; j < m; j++ )
-            if( std::abs(A[j*astep + i]) > std::abs(A[k*astep + i]) )
+            if( std::abs<_Tp>(A[j*astep + i]) > std::abs<_Tp>(A[k*astep + i]) )
                 k = j;
 
-        if( std::abs(A[k*astep + i]) < std::numeric_limits<_Tp>::epsilon() )
+        if( std::abs<_Tp>(A[k*astep + i]) < std::numeric_limits<_Tp>::epsilon() )
             return 0;
 
         if( k != i )
@@ -213,8 +213,8 @@ bool Cholesky(double* A, size_t astep, int m, double* b, size_t bstep, int n)
 
 template<typename _Tp> static inline _Tp hypot(_Tp a, _Tp b)
 {
-    a = std::abs(a);
-    b = std::abs(b);
+    a = std::abs<_Tp>(a);
+    b = std::abs<_Tp>(b);
     if( a > b )
     {
         b /= a;
@@ -258,9 +258,9 @@ JacobiImpl_( _Tp* A, size_t astep, _Tp* W, _Tp* V, size_t vstep, int n, uchar* b
         W[k] = A[(astep + 1)*k];
         if( k < n - 1 )
         {
-            for( m = k+1, mv = std::abs(A[astep*k + m]), i = k+2; i < n; i++ )
+            for( m = k+1, mv = std::abs<_Tp>(A[astep*k + m]), i = k+2; i < n; i++ )
             {
-                _Tp val = std::abs(A[astep*k+i]);
+                _Tp val = std::abs<_Tp>(A[astep*k+i]);
                 if( mv < val )
                     mv = val, m = i;
             }
@@ -268,9 +268,9 @@ JacobiImpl_( _Tp* A, size_t astep, _Tp* W, _Tp* V, size_t vstep, int n, uchar* b
         }
         if( k > 0 )
         {
-            for( m = 0, mv = std::abs(A[k]), i = 1; i < k; i++ )
+            for( m = 0, mv = std::abs<_Tp>(A[k]), i = 1; i < k; i++ )
             {
-                _Tp val = std::abs(A[astep*i+k]);
+                _Tp val = std::abs<_Tp>(A[astep*i+k]);
                 if( mv < val )
                     mv = val, m = i;
             }
@@ -281,25 +281,25 @@ JacobiImpl_( _Tp* A, size_t astep, _Tp* W, _Tp* V, size_t vstep, int n, uchar* b
     if( n > 1 ) for( iters = 0; iters < maxIters; iters++ )
     {
         // find index (k,l) of pivot p
-        for( k = 0, mv = std::abs(A[indR[0]]), i = 1; i < n-1; i++ )
+        for( k = 0, mv = std::abs<_Tp>(A[indR[0]]), i = 1; i < n-1; i++ )
         {
-            _Tp val = std::abs(A[astep*i + indR[i]]);
+            _Tp val = std::abs<_Tp>(A[astep*i + indR[i]]);
             if( mv < val )
                 mv = val, k = i;
         }
         int l = indR[k];
         for( i = 1; i < n; i++ )
         {
-            _Tp val = std::abs(A[astep*indC[i] + i]);
+            _Tp val = std::abs<_Tp>(A[astep*indC[i] + i]);
             if( mv < val )
                 mv = val, k = indC[i], l = i;
         }
 
         _Tp p = A[astep*k + l];
-        if( std::abs(p) <= eps )
+        if( std::abs<_Tp>(p) <= eps )
             break;
         _Tp y = (_Tp)((W[l] - W[k])*0.5);
-        _Tp t = std::abs(y) + hypot(p, y);
+        _Tp t = std::abs<_Tp>(y) + hypot(p, y);
         _Tp s = hypot(p, t);
         _Tp c = t/s;
         s = p/s; t = (p/t)*p;
@@ -335,9 +335,9 @@ JacobiImpl_( _Tp* A, size_t astep, _Tp* W, _Tp* V, size_t vstep, int n, uchar* b
             int idx = j == 0 ? k : l;
             if( idx < n - 1 )
             {
-                for( m = idx+1, mv = std::abs(A[astep*idx + m]), i = idx+2; i < n; i++ )
+                for( m = idx+1, mv = std::abs<_Tp>(A[astep*idx + m]), i = idx+2; i < n; i++ )
                 {
-                    _Tp val = std::abs(A[astep*idx+i]);
+                    _Tp val = std::abs<_Tp>(A[astep*idx+i]);
                     if( mv < val )
                         mv = val, m = i;
                 }
@@ -345,9 +345,9 @@ JacobiImpl_( _Tp* A, size_t astep, _Tp* W, _Tp* V, size_t vstep, int n, uchar* b
             }
             if( idx > 0 )
             {
-                for( m = 0, mv = std::abs(A[idx]), i = 1; i < idx; i++ )
+                for( m = 0, mv = std::abs<_Tp>(A[idx]), i = 1; i < idx; i++ )
                 {
-                    _Tp val = std::abs(A[astep*i+idx]);
+                    _Tp val = std::abs<_Tp>(A[astep*i+idx]);
                     if( mv < val )
                         mv = val, m = i;
                 }
@@ -573,7 +573,7 @@ JacobiSVDImpl_(_Tp* At, size_t astep, _Tp* _W, _Tp* Vt, size_t vstep,
                 for( k = 0; k < m; k++ )
                     p += (double)Ai[k]*Aj[k];
 
-                if( std::abs(p) <= eps*std::sqrt((double)a*b) )
+                if( std::abs<_Tp>(p) <= eps*std::sqrt((double)a*b) )
                     continue;
 
                 p *= 2;
@@ -686,7 +686,7 @@ JacobiSVDImpl_(_Tp* At, size_t astep, _Tp* _W, _Tp* Vt, size_t vstep,
                     {
                         _Tp t = (_Tp)(At[i*astep + k] - sd*At[j*astep + k]);
                         At[i*astep + k] = t;
-                        asum += std::abs(t);
+                        asum += std::abs<_Tp>(t);
                     }
                     asum = asum ? 1/asum : 0;
                     for( k = 0; k < m; k++ )
@@ -774,7 +774,7 @@ SVBkSbImpl_( int m, int n, const T* w, int incw,
     for( i = 0; i < nm; i++, u += udelta0, v += vdelta0 )
     {
         double wi = w[i*incw];
-        if( (double)std::abs(wi) <= threshold )
+        if( (double)std::abs<double>(wi) <= threshold )
             continue;
         wi = 1/wi;
 

@@ -187,7 +187,7 @@ namespace
         for (int m = 0, ind = 0; m <= ksize; ++m)
         {
             for (int l = ksize; l + m >= 0; --l, ++ind)
-                btvWeights[ind] = pow(alpha_f, std::abs(m) + std::abs(l));
+                btvWeights[ind] = pow(alpha_f, std::abs<int>(m) + std::abs<int>(l));
         }
     }
 

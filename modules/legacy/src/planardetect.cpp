@@ -306,7 +306,7 @@ static void getDiscreteCircle(int R, vector<Point>& circle, vector<int>& filledH
 
 struct CmpKeypointScores
 {
-    bool operator ()(const KeyPoint& a, const KeyPoint& b) const { return std::abs(a.response) > std::abs(b.response); }
+    bool operator ()(const KeyPoint& a, const KeyPoint& b) const { return std::abs<float>(a.response) > std::abs<float>(b.response); }
 };
 
 
@@ -421,7 +421,7 @@ static Point2f adjustCorner(const float* fval, float& fvaln)
     dx = std::min(std::max(dx, -1.), 1.);
     dy = std::min(std::max(dy, -1.), 1.);
     fvaln = (float)(fval[4] + (bx*dx + by*dy)*0.5);
-    if(fvaln*fval[4] < 0 || std::abs(fvaln) < std::abs(fval[4]))
+    if(fvaln*fval[4] < 0 || std::abs<float>(fvaln) < std::abs<float>(fval[4]))
         fvaln = fval[4];
 
     return Point2f((float)dx, (float)dy);

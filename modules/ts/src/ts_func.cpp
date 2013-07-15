@@ -1133,26 +1133,26 @@ norm_(const _Tp* src, size_t total, int cn, int normType, double startval, const
     {
         if( !mask )
             for( i = 0; i < total; i++ )
-                result = std::max(result, (double)std::abs(0+src[i]));// trick with 0 used to quiet gcc warning
+                result = std::max(result, std::abs<double>(0+src[i]));// trick with 0 used to quiet gcc warning
         else
             for( int c = 0; c < cn; c++ )
             {
                 for( i = 0; i < total; i++ )
                     if( mask[i] )
-                        result = std::max(result, (double)std::abs(0+src[i*cn + c]));
+                        result = std::max(result, std::abs<double>(0+src[i*cn + c]));
             }
     }
     else if( normType == NORM_L1 )
     {
         if( !mask )
             for( i = 0; i < total; i++ )
-                result += std::abs(0+src[i]);
+                result += std::abs<double>(0+src[i]);
         else
             for( int c = 0; c < cn; c++ )
             {
                 for( i = 0; i < total; i++ )
                     if( mask[i] )
-                        result += std::abs(0+src[i*cn + c]);
+                        result += std::abs<double>(0+src[i*cn + c]);
             }
     }
     else
@@ -1190,26 +1190,26 @@ norm_(const _Tp* src1, const _Tp* src2, size_t total, int cn, int normType, doub
     {
         if( !mask )
             for( i = 0; i < total; i++ )
-                result = std::max(result, (double)std::abs(src1[i] - src2[i]));
+                result = std::max(result, std::abs<double>(src1[i] - src2[i]));
         else
             for( int c = 0; c < cn; c++ )
             {
                 for( i = 0; i < total; i++ )
                     if( mask[i] )
-                        result = std::max(result, (double)std::abs(src1[i*cn + c] - src2[i*cn + c]));
+                        result = std::max(result, std::abs<double>(src1[i*cn + c] - src2[i*cn + c]));
             }
     }
     else if( normType == NORM_L1 )
     {
         if( !mask )
             for( i = 0; i < total; i++ )
-                result += std::abs(src1[i] - src2[i]);
+                result += std::abs<double>(src1[i] - src2[i]);
         else
             for( int c = 0; c < cn; c++ )
             {
                 for( i = 0; i < total; i++ )
                     if( mask[i] )
-                        result += std::abs(src1[i*cn + c] - src2[i*cn + c]);
+                        result += std::abs<double>(src1[i*cn + c] - src2[i*cn + c]);
             }
     }
     else
@@ -1719,7 +1719,7 @@ cmpUlpsInt_(const _Tp* src1, const _Tp* src2, size_t total, int imaxdiff,
     int realmaxdiff = 0;
     for( i = 0; i < total; i++ )
     {
-        int diff = std::abs(src1[i] - src2[i]);
+        int diff = std::abs<int>(src1[i] - src2[i]);
         if( realmaxdiff < diff )
         {
             realmaxdiff = diff;
@@ -1761,7 +1761,7 @@ cmpUlpsFlt_(const int* src1, const int* src2, size_t total, int imaxdiff, size_t
     {
         int a = src1[i], b = src2[i];
         if( a < 0 ) a ^= C; if( b < 0 ) b ^= C;
-        int diff = std::abs(a - b);
+        int diff = std::abs<int>(a - b);
         if( realmaxdiff < diff )
         {
             realmaxdiff = diff;

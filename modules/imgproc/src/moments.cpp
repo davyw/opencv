@@ -561,7 +561,7 @@ Moments::Moments( double _m00, double _m10, double _m01, double _m20, double _m1
     m30 = _m30; m21 = _m21; m12 = _m12; m03 = _m03;
 
     double cx = 0, cy = 0, inv_m00 = 0;
-    if( std::abs(m00) > DBL_EPSILON )
+    if( std::abs<double>(m00) > DBL_EPSILON )
     {
         inv_m00 = 1./m00;
         cx = m10*inv_m00; cy = m01*inv_m00;
@@ -576,7 +576,7 @@ Moments::Moments( double _m00, double _m10, double _m01, double _m20, double _m1
     mu12 = m12 - cy*(2*mu11 + cy*m10) - cx*mu02;
     mu03 = m03 - cy*(3*mu02 + cy*m01);
 
-    double inv_sqrt_m00 = std::sqrt(std::abs(inv_m00));
+    double inv_sqrt_m00 = std::sqrt(std::abs<double>(inv_m00));
     double s2 = inv_m00*inv_m00, s3 = s2*inv_sqrt_m00;
 
     nu20 = mu20*s2; nu11 = mu11*s2; nu02 = mu02*s2;
@@ -596,7 +596,7 @@ Moments::operator CvMoments() const
     m.m30 = m30; m.m21 = m21; m.m12 = m12; m.m03 = m03;
     m.mu20 = mu20; m.mu11 = mu11; m.mu02 = mu02;
     m.mu30 = mu30; m.mu21 = mu21; m.mu12 = mu12; m.mu03 = mu03;
-    double am00 = std::abs(m00);
+    double am00 = std::abs<double>(m00);
     m.inv_sqrt_m00 = am00 > DBL_EPSILON ? 1./std::sqrt(am00) : 0;
 
     return m;

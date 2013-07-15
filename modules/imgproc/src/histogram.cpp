@@ -2036,7 +2036,7 @@ double cv::compareHist( InputArray _H1, InputArray _H2, int method )
         double scale = 1./total;
         double num = s12 - s1*s2*scale;
         double denom2 = (s11 - s1*s1*scale)*(s22 - s2*s2*scale);
-        result = std::abs(denom2) > DBL_EPSILON ? num/std::sqrt(denom2) : 1.;
+        result = std::abs<double>(denom2) > DBL_EPSILON ? num/std::sqrt(denom2) : 1.;
     }
     else if( method == CV_COMP_BHATTACHARYYA )
     {
@@ -2105,7 +2105,7 @@ double cv::compareHist( const SparseMat& H1, const SparseMat& H2, int method )
         double scale = 1./total;
         double num = s12 - s1*s2*scale;
         double denom2 = (s11 - s1*s1*scale)*(s22 - s2*s2*scale);
-        result = std::abs(denom2) > DBL_EPSILON ? num/std::sqrt(denom2) : 1.;
+        result = std::abs<double>(denom2) > DBL_EPSILON ? num/std::sqrt(denom2) : 1.;
     }
     else if( method == CV_COMP_INTERSECT )
     {

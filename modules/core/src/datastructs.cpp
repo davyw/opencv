@@ -3826,7 +3826,7 @@ int KDTree::findNearest(InputArray _vec, int K, int emax,
                     }
                 else
                     for( j = 0, d = 0.f; j < ptdims; j++ )
-                        d += std::abs(vec[j] - row[j]);
+                        d += std::abs<float>(vec[j] - row[j]);
 
                 dist[ncount] = d;
                 idx[ncount] = i;
@@ -3858,7 +3858,7 @@ int KDTree::findNearest(InputArray _vec, int K, int emax,
             if( normType == NORM_L2 )
                 d = d*d + alt_d;
             else
-                d = std::abs(d) + alt_d;
+                d = std::abs<float>(d) + alt_d;
             // subtree prunning
             if( ncount == K && d > dist[ncount-1] )
                 continue;

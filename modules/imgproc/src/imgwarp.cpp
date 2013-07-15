@@ -1756,8 +1756,8 @@ void cv::resize( InputArray _src, OutputArray _dst, Size dsize,
         int iscale_x = saturate_cast<int>(scale_x);
         int iscale_y = saturate_cast<int>(scale_y);
 
-        bool is_area_fast = std::abs(scale_x - iscale_x) < DBL_EPSILON &&
-                std::abs(scale_y - iscale_y) < DBL_EPSILON;
+        bool is_area_fast = std::abs<double>(scale_x - iscale_x) < DBL_EPSILON &&
+                std::abs<double>(scale_y - iscale_y) < DBL_EPSILON;
 
         // in case of scale_x && scale_y is equal to 2
         // INTER_AREA (fast) also is equal to INTER_LINEAR

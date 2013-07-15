@@ -385,12 +385,12 @@ static bool adjustLocalExtrema( const vector<Mat>& dog_pyr, KeyPoint& kpt, int o
         xr = -X[1];
         xc = -X[0];
 
-        if( std::abs(xi) < 0.5f && std::abs(xr) < 0.5f && std::abs(xc) < 0.5f )
+        if( std::abs<float>(xi) < 0.5f && std::abs<float>(xr) < 0.5f && std::abs<float>(xc) < 0.5f )
             break;
 
-        if( std::abs(xi) > (float)(INT_MAX/3) ||
-            std::abs(xr) > (float)(INT_MAX/3) ||
-            std::abs(xc) > (float)(INT_MAX/3) )
+        if( std::abs<float>(xi) > (float)(INT_MAX/3) ||
+            std::abs<float>(xr) > (float)(INT_MAX/3) ||
+            std::abs<float>(xc) > (float)(INT_MAX/3) )
             return false;
 
         c += cvRound(xc);
@@ -418,7 +418,7 @@ static bool adjustLocalExtrema( const vector<Mat>& dog_pyr, KeyPoint& kpt, int o
         float t = dD.dot(Matx31f(xc, xr, xi));
 
         contr = img.at<sift_wt>(r, c)*img_scale + t * 0.5f;
-        if( std::abs( contr ) * nOctaveLayers < contrastThreshold )
+        if( std::abs<float>( contr ) * nOctaveLayers < contrastThreshold )
             return false;
 
         // principal curvatures are computed using the trace and det of Hessian
@@ -438,7 +438,7 @@ static bool adjustLocalExtrema( const vector<Mat>& dog_pyr, KeyPoint& kpt, int o
     kpt.pt.y = (r + xr) * (1 << octv);
     kpt.octave = octv + (layer << 8) + (cvRound((xi + 0.5)*255) << 16);
     kpt.size = sigma*powf(2.f, (layer + xi) / nOctaveLayers)*(1 << octv)*2;
-    kpt.response = std::abs(contr);
+    kpt.response = std::abs<float>(contr);
 
     return true;
 }
@@ -479,7 +479,7 @@ void SIFT::findScaleSpaceExtrema( const vector<Mat>& gauss_pyr, const vector<Mat
                     sift_wt val = currptr[c];
 
                     // find local extrema with pixel accuracy
-                    if( std::abs(val) > threshold &&
+                    if( std::abs<float>(val) > threshold &&
                        ((val > 0 && val >= currptr[c-1] && val >= currptr[c+1] &&
                          val >= currptr[c-step-1] && val >= currptr[c-step] && val >= currptr[c-step+1] &&
                          val >= currptr[c+step-1] && val >= currptr[c+step] && val >= currptr[c+step+1] &&
@@ -521,7 +521,7 @@ void SIFT::findScaleSpaceExtrema( const vector<Mat>& gauss_pyr, const vector<Mat
                                 float bin = j + 0.5f * (hist[l]-hist[r2]) / (hist[l] - 2*hist[j] + hist[r2]);
                                 bin = bin < 0 ? n + bin : bin >= n ? bin - n : bin;
                                 kpt.angle = 360.f - (float)((360.f/n) * bin);
-                                if(std::abs(kpt.angle - 360.f) < FLT_EPSILON)
+                                if(std::abs<float>(kpt.angle - 360.f) < FLT_EPSILON)
                                     kpt.angle = 0.f;
                                 keypoints.push_back(kpt);
                             }

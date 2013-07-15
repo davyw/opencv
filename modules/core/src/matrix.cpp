@@ -4148,10 +4148,10 @@ double norm( const SparseMat& src, int normType )
     {
         if( normType == NORM_INF )
             for( i = 0; i < N; i++, ++it )
-                result = std::max(result, std::abs((double)*(const float*)it.ptr));
+                result = std::max(result, std::abs<double>((double)*(const float*)it.ptr));
         else if( normType == NORM_L1 )
             for( i = 0; i < N; i++, ++it )
-                result += std::abs(*(const float*)it.ptr);
+                result += std::abs<double>(*(const float*)it.ptr);
         else
             for( i = 0; i < N; i++, ++it )
             {
@@ -4163,10 +4163,10 @@ double norm( const SparseMat& src, int normType )
     {
         if( normType == NORM_INF )
             for( i = 0; i < N; i++, ++it )
-                result = std::max(result, std::abs(*(const double*)it.ptr));
+                result = std::max(result, std::abs<double>(*(const double*)it.ptr));
         else if( normType == NORM_L1 )
             for( i = 0; i < N; i++, ++it )
-                result += std::abs(*(const double*)it.ptr);
+                result += std::abs<double>(*(const double*)it.ptr);
         else
             for( i = 0; i < N; i++, ++it )
             {

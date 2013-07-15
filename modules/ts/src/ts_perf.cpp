@@ -321,7 +321,7 @@ void Regression::verify(cv::FileNode node, cv::Mat actual, double eps, std::stri
     double expect_max = (double)node["max"];
 
     if (err == ERROR_RELATIVE)
-        eps *= std::max(std::abs(expect_min), std::abs(expect_max));
+        eps *= std::max(std::abs<double>(expect_min), std::abs<double>(expect_max));
 
     double actual_min, actual_max;
     cv::minMaxIdx(actual, &actual_min, &actual_max);

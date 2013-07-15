@@ -62,7 +62,7 @@ Mat windowedMatchingMask( const vector<KeyPoint>& keypoints1, const vector<KeyPo
         for( int j = 0; j < n2; j++ )
         {
             Point2f diff = keypoints2[j].pt - keypoints1[i].pt;
-            mask.at<uchar>(i, j) = std::abs(diff.x) < maxDeltaX && std::abs(diff.y) < maxDeltaY;
+            mask.at<uchar>(i, j) = std::abs<float>(diff.x) < maxDeltaX && std::abs<float>(diff.y) < maxDeltaY;
         }
     }
     return mask;
