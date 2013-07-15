@@ -9368,7 +9368,7 @@ using internal::GetUnitTestImpl;
 std::string TestPartResult::ExtractSummary(const char* message) {
   const char* const stack_trace = strstr(message, internal::kStackTraceMarker);
   return stack_trace == NULL ? message :
-      std::string(message, stack_trace);
+      std::string(message, stack_trace).c_str();
 }
 
 // Prints a TestPartResult object.

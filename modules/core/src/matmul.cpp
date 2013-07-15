@@ -1793,7 +1793,11 @@ void cv::transform( InputArray _src, OutputArray _dst, InputArray _mtx )
         {
             for( j = 0; isDiag && j < scn; j++ )
             {
+                #ifdef __BORLANDC__
+                double v = mtype == CV_32F ? (double) m.at<float>(i, j) : m.at<double>(i, j);
+                #else
                 double v = mtype == CV_32F ? m.at<float>(i, j) : m.at<double>(i, j);
+                #endif
                 if( i != j && fabs(v) > eps )
                     isDiag = false;
             }

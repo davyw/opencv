@@ -126,7 +126,7 @@ Mat randomMat(RNG& rng, const vector<int>& size, int type, double minVal, double
 {
     int i, dims = (int)size.size();
     vector<int> size0(dims);
-    vector<Range> r(dims);
+    vector<cv::Range> r(dims);
     bool eqsize = true;
     for( i = 0; i < dims; i++ )
     {
@@ -135,7 +135,7 @@ Mat randomMat(RNG& rng, const vector<int>& size, int type, double minVal, double
         if( useRoi )
         {
             size0[i] += std::max(rng.uniform(0, 5) - 2, 0);
-            r[i] = Range((size0[i] - size[i])/2, (size0[i] - size[i])/2 + size[i]);
+            r[i] = cv::Range((size0[i] - size[i])/2, (size0[i] - size[i])/2 + size[i]);
         }
         eqsize = eqsize && size[i] == size0[i];
     }

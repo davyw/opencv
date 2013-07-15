@@ -1224,9 +1224,13 @@ protected:
 class CV_EXPORTS_W FlannBasedMatcher : public DescriptorMatcher
 {
 public:
+    #ifdef __BORLANDC__
+    CV_WRAP FlannBasedMatcher( const Ptr<flann::IndexParams>& indexParams= (Ptr<flann::IndexParams>) new  flann::KDTreeIndexParams(),
+                       const Ptr<flann::SearchParams>& searchParams=(Ptr<flann::SearchParams>)new flann::SearchParams() );
+    #else
     CV_WRAP FlannBasedMatcher( const Ptr<flann::IndexParams>& indexParams=new flann::KDTreeIndexParams(),
                        const Ptr<flann::SearchParams>& searchParams=new flann::SearchParams() );
-
+    #endif
     virtual void add( const vector<Mat>& descriptors );
     virtual void clear();
 

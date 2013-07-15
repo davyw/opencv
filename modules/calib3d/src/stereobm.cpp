@@ -182,11 +182,20 @@ prefilterXSobel( const Mat& src, Mat& dst, int ftzero )
     for( y = 0; y < size.height-1; y += 2 )
     {
         const uchar* srow1 = src.ptr<uchar>(y);
+        #ifdef __BORLANDC__
+        const uchar* srow0 = y > 0 ? srow1 - (unsigned int) src.step : size.height > 1 ? srow1 + (unsigned int) src.step : srow1;
+        const uchar* srow2 = y < size.height-1 ? srow1 + (unsigned int) src.step : size.height > 1 ? srow1 - (unsigned int) src.step : srow1;
+        #else
         const uchar* srow0 = y > 0 ? srow1 - src.step : size.height > 1 ? srow1 + src.step : srow1;
         const uchar* srow2 = y < size.height-1 ? srow1 + src.step : size.height > 1 ? srow1 - src.step : srow1;
+        #endif
         const uchar* srow3 = y < size.height-2 ? srow1 + src.step*2 : srow1;
         uchar* dptr0 = dst.ptr<uchar>(y);
+        #ifdef __BORLANDC__
+        uchar* dptr1 = dptr0 + (unsigned int) dst.step;
+        #else
         uchar* dptr1 = dptr0 + dst.step;
+        #endif
 
         dptr0[0] = dptr0[size.width-1] = dptr1[0] = dptr1[size.width-1] = val0;
         x = 1;

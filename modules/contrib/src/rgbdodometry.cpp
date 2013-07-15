@@ -350,7 +350,11 @@ void buildPyramids( const Mat& image0, const Mat& image1,
             }
         }
         pyramidTexturedMask1[i] = texturedMask;
+        #ifdef __BORLANDC__
+        Mat levelCameraMatrix = i == 0 ? (Mat) cameraMatrix_dbl : (Mat) (0.5f * pyramidCameraMatrix[i-1]);
+        #else
         Mat levelCameraMatrix = i == 0 ? cameraMatrix_dbl : 0.5f * pyramidCameraMatrix[i-1];
+        #endif
         levelCameraMatrix.at<double>(2,2) = 1.;
         pyramidCameraMatrix.push_back( levelCameraMatrix );
     }
@@ -567,7 +571,12 @@ bool cv::RGBDOdometry( cv::Mat& Rt, const Mat& initRt,
                    pyramidImage0, pyramidDepth0, pyramidImage1, pyramidDepth1,
                    pyramid_dI_dx1, pyramid_dI_dy1, pyramidTexturedMask1, pyramidCameraMatrix );
 
+    #ifdef __BORLANDC__
+    Mat resultRt = initRt.empty() ? (Mat)Mat::eye(4,4,CV_64FC1) : (Mat)initRt.clone();
+    #else
     Mat resultRt = initRt.empty() ? Mat::eye(4,4,CV_64FC1) : initRt.clone();
+    #endif
+
     Mat currRt, ksi;
     for( int level = (int)iterCountsPtr->size() - 1; level >= 0; level-- )
     {

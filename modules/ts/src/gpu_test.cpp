@@ -232,7 +232,7 @@ namespace cvtest
     {
         if (src.depth() != CV_8S)
         {
-            minMaxLoc(src, minVal_, maxVal_, minLoc_, maxLoc_, mask);
+            minMaxLoc(src, minVal_, maxVal_, (std::vector<int>*) minLoc_, (std::vector<int>*) maxLoc_, mask);
             return;
         }
 

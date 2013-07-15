@@ -515,7 +515,11 @@ enum { CALIB_CB_SYMMETRIC_GRID = 1, CALIB_CB_ASYMMETRIC_GRID = 2,
 //! finds circles' grid pattern of the specified size in the image
 CV_EXPORTS_W bool findCirclesGrid( InputArray image, Size patternSize,
                                  OutputArray centers, int flags=CALIB_CB_SYMMETRIC_GRID,
+                                 #ifdef __BORLANDC__
+                                 const Ptr<FeatureDetector> &blobDetector = (Ptr<FeatureDetector>) new SimpleBlobDetector());
+                                 #else
                                  const Ptr<FeatureDetector> &blobDetector = new SimpleBlobDetector());
+                                 #endif
 
 //! the deprecated function. Use findCirclesGrid() instead of it.
 CV_EXPORTS_W bool findCirclesGridDefault( InputArray image, Size patternSize,

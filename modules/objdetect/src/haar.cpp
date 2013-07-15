@@ -1724,7 +1724,7 @@ cvHaarDetectObjectsForROC( const CvArr* _img,
                 rectList.resize(allCandidates.size());
                 std::copy(allCandidates.begin(), allCandidates.end(), rectList.begin());
 
-                groupRectangles(rectList, std::max(minNeighbors, 1), GROUP_EPS);
+                cv::groupRectangles(rectList, std::max(minNeighbors, 1), GROUP_EPS);
 
                 if( !rectList.empty() )
                 {
@@ -1763,11 +1763,11 @@ cvHaarDetectObjectsForROC( const CvArr* _img,
     {
         if( outputRejectLevels )
         {
-            groupRectangles(rectList, rejectLevels, levelWeights, minNeighbors, GROUP_EPS );
+            cv::groupRectangles(rectList, rejectLevels, levelWeights, minNeighbors, GROUP_EPS );
         }
         else
         {
-            groupRectangles(rectList, rweights, std::max(minNeighbors, 1), GROUP_EPS);
+            cv::groupRectangles(rectList, rweights, std::max(minNeighbors, 1), GROUP_EPS);
         }
     }
     else

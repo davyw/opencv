@@ -516,7 +516,11 @@ namespace
 
                         for (size_t j = 0; j < r_row.size(); ++j)
                         {
+                            #ifdef __BORLANDC__
+                            Point2d d = (Point2d &) r_row[j];
+                            #else
                             Point2d d = r_row[j];
+                            #endif
                             Point2d c = p - d * scale;
 
                             c.x *= idp;
@@ -686,7 +690,11 @@ namespace
 
                         for (size_t j = 0; j < r_row.size(); ++j)
                         {
+                            #ifdef __BORLANDC__
+                            Point2d d = (Point2d &) r_row[j];
+                            #else
                             Point2d d = r_row[j];
+                            #endif
                             Point2d c = p - Point2d(d.x * cosA - d.y * sinA, d.x * sinA + d.y * cosA);
 
                             c.x *= idp;

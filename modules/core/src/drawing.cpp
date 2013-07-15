@@ -1095,7 +1095,11 @@ FillConvexPoly( Mat& img, const Point* v, int npts, const void* color, int line_
 
         edge[left].x = x1;
         edge[right].x = x2;
+        #ifdef __BORLANDC__
+        ptr += (unsigned int) img.step;
+        #else
         ptr += img.step;
+        #endif
     }
     while( ++y <= ymax );
 }

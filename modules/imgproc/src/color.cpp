@@ -172,7 +172,11 @@ public:
         const uchar* yS = src.ptr<uchar>(range.start);
         uchar* yD = dst.ptr<uchar>(range.start);
 
+        #ifdef __BORLANDC__
+        for( int i = range.start; i < range.end; ++i, yS += (unsigned int) src.step, yD += (unsigned int) dst.step )
+        #else
         for( int i = range.start; i < range.end; ++i, yS += src.step, yD += dst.step )
+        #endif
             cvt((const _Tp*)yS, (_Tp*)yD, src.cols);
     }
 

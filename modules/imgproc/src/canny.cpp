@@ -268,7 +268,11 @@ __ocv_canny_push:
     // the final pass, form the final image
     const uchar* pmap = map + mapstep + 1;
     uchar* pdst = dst.ptr();
+    #ifdef __BORLANDC__
+    for (int i = 0; i < src.rows; i++, pmap += mapstep, pdst += (unsigned int) dst.step)
+    #else
     for (int i = 0; i < src.rows; i++, pmap += mapstep, pdst += dst.step)
+    #endif
     {
         for (int j = 0; j < src.cols; j++)
             pdst[j] = (uchar)-(pmap[j] >> 1);

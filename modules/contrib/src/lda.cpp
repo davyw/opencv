@@ -1102,12 +1102,20 @@ void LDA::compute(InputArrayOfArrays _src, InputArray _lbls) {
 
 // Projects samples into the LDA subspace.
 Mat LDA::project(InputArray src) {
+   #ifdef __BORLANDC__
+   return subspaceProject(_eigenvectors, Mat(), _dataAsRow ? src : (InputArray) src.getMat().t());
+   #else
    return subspaceProject(_eigenvectors, Mat(), _dataAsRow ? src : src.getMat().t());
+   #endif
 }
 
 // Reconstructs projections from the LDA subspace.
 Mat LDA::reconstruct(InputArray src) {
+   #ifdef __BORLANDC__
+   return subspaceReconstruct(_eigenvectors, Mat(), _dataAsRow ? src : (InputArray) src.getMat().t());
+   #else
    return subspaceReconstruct(_eigenvectors, Mat(), _dataAsRow ? src : src.getMat().t());
+   #endif
 }
 
 }

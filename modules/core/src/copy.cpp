@@ -238,7 +238,11 @@ void Mat::copyTo( OutputArray _dst ) const
                 getContinuousSize(*this);
             size_t len = sz.width*elemSize();
 
+            #ifdef __BORLANDC__
+            for( ; sz.height--; sptr += (unsigned int) step, dptr += (unsigned int) dst.step )
+            #else
             for( ; sz.height--; sptr += step, dptr += dst.step )
+            #endif
                 memcpy( dptr, sptr, len );
         }
         return;

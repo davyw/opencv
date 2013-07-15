@@ -196,7 +196,11 @@ Rect CvFeatureTracker::updateTrackingWindowWithFlow(Mat image)
         prev_trackwindow.y = (int)prev_center.y;
     }
 
+    #ifdef __BORLANDC__
+    swap((Mat&) features[0], (Mat&) features[1]);
+    #else
     swap(features[0], features[1]);
+    #endif
     image.copyTo(prev_image);
     return prev_trackwindow;
 }

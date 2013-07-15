@@ -651,7 +651,7 @@ static void calcSIFTDescriptor( const Mat& img, Point2f ptf, float ori, float sc
         dst[i] = val;
         nrm2 += val*val;
     }
-    nrm2 = SIFT_INT_DESCR_FCTR/std::max(std::sqrt(nrm2), FLT_EPSILON);
+    nrm2 = SIFT_INT_DESCR_FCTR/std::max(std::sqrt(nrm2), (double) FLT_EPSILON);
 
 #if 1
     for( k = 0; k < len; k++ )
@@ -690,7 +690,7 @@ static void calcDescriptors(const vector<Mat>& gpyr, const vector<KeyPoint>& key
         const Mat& img = gpyr[(octave - firstOctave)*(nOctaveLayers + 3) + layer];
 
         float angle = 360.f - kpt.angle;
-        if(std::abs(angle - 360.f) < FLT_EPSILON)
+        if(std::abs<float>(angle - 360.f) < FLT_EPSILON)
             angle = 0.f;
         calcSIFTDescriptor(img, ptf, angle, size*0.5f, d, n, descriptors.ptr<float>((int)i));
     }

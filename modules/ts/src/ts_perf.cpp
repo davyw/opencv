@@ -673,7 +673,7 @@ void TestBase::Init(const std::vector<std::string> & availableImpls,
 
     ::testing::AddGlobalTestEnvironment(new PerfEnvironment);
 
-    param_impl          = args.get<bool>("perf_run_cpu") ? "plain" : args.get<std::string>("perf_impl");
+    param_impl          = args.get<bool>("perf_run_cpu") ? std::string("plain") : args.get<std::string>("perf_impl");
     param_max_outliers  = std::min(100., std::max(0., args.get<double>("perf_max_outliers")));
     param_min_samples   = std::max(1u, args.get<unsigned int>("perf_min_samples"));
     param_max_deviation = std::max(0., args.get<double>("perf_max_deviation"));

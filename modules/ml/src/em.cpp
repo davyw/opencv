@@ -494,7 +494,7 @@ Vec2d EM::computeProbabilities(const Mat& sample, Mat* probs) const
         const Mat centeredSample = sample - means.row(clusterIndex);
 
         Mat rotatedCenteredSample = covMatType != EM::COV_MAT_GENERIC ?
-                centeredSample : centeredSample * covsRotateMats[clusterIndex];
+                centeredSample : (Mat) (centeredSample * covsRotateMats[clusterIndex]);
 
         double Lval = 0;
         for(int di = 0; di < dim; di++)

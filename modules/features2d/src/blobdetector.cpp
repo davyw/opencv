@@ -253,7 +253,11 @@ void SimpleBlobDetector::findBlobs(const cv::Mat &image, const cv::Mat &binaryIm
             vector<double> dists;
             for (size_t pointIdx = 0; pointIdx < contours[contourIdx].size(); pointIdx++)
             {
+                #ifdef __BORLANDC__
+                Point2d pt = (Point2d&) contours[contourIdx][pointIdx];
+                #else
                 Point2d pt = contours[contourIdx][pointIdx];
+                #endif
                 dists.push_back(norm(center.location - pt));
             }
             std::sort(dists.begin(), dists.end());
