@@ -46,6 +46,14 @@
 #include "opencv2/core/core.hpp"
 #include "warpers.hpp" // Make your IDE see declarations
 
+#ifdef __BORLANDC__
+#define asinf (float) asin
+#define acosf (float) acos
+#define atanf (float) atan
+#define sinhf (float) sinh
+#define coshf (float) cosh
+#endif
+
 namespace cv {
 namespace detail {
 

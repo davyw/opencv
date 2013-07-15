@@ -56,6 +56,10 @@ inline T abs(T x) { return (x<0) ? -x : x; }
 template<>
 inline int abs<int>(int x) { return ::abs(x); }
 
+#ifdef __BORLANDC__
+#define fabsf fabs
+#endif
+
 template<>
 inline float abs<float>(float x) { return fabsf(x); }
 

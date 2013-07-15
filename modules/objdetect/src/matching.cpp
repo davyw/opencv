@@ -10,6 +10,10 @@
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
 #endif
 
+#ifdef __BORLANDC__
+#define ceilf ceil
+#endif
+
 /*
 // Function for convolution computation
 //
