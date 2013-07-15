@@ -2303,3 +2303,7 @@ namespace cv{
         return matcher;
     }
 }
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::OneWayDescriptorBase>::delete_obj() {}
+#endif

@@ -808,3 +808,7 @@ void cv::inpaint( InputArray _src, InputArray _mask, OutputArray _dst,
     CvMat c_src = src, c_mask = mask, c_dst = _dst.getMat();
     cvInpaint( &c_src, &c_mask, &c_dst, inpaintRange, flags );
 }
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<CvPriorityQueueFloat>::delete_obj() {}
+#endif

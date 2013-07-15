@@ -136,3 +136,7 @@ void WeightingDeblurer::deblur(int idx, Mat &frame)
 
 } // namespace videostab
 } // namespace cv
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::videostab::ISparseOptFlowEstimator>::delete_obj() {}
+#endif

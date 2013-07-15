@@ -527,3 +527,8 @@ void completeFrameAccordingToFlow(
 
 } // namespace videostab
 } // namespace cv
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::videostab::InpainterBase>::delete_obj() {}
+template<> void cv::Ptr<cv::videostab::IDenseOptFlowEstimator>::delete_obj() {}
+#endif

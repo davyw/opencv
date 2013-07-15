@@ -900,3 +900,7 @@ bool initModule_contrib()
 }
 
 }
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::FaceRecognizer>::delete_obj() {}
+#endif

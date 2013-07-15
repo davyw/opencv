@@ -1647,3 +1647,6 @@ void GraphCutSeamFinderGpu::setGraphWeightsColorGrad(
 } // namespace detail
 } // namespace cv
 
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::detail::PairwiseSeamFinder>::delete_obj() {}
+#endif

@@ -486,3 +486,7 @@ void Stitcher::estimateCameraParams()
 }
 
 } // namespace cv
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::detail::RotationWarper>::delete_obj() {}
+#endif

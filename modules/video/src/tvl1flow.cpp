@@ -936,3 +936,7 @@ Ptr<DenseOpticalFlow> cv::createOptFlow_DualTVL1()
 {
     return new OpticalFlowDual_TVL1;
 }
+
+#ifdef __BORLANDC__
+template<> void Ptr<DenseOpticalFlow>::delete_obj() {}
+#endif

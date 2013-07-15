@@ -226,6 +226,13 @@ void cv::GlArrays::unbind() const
 ////////////////////////////////////////////////////////////////////////
 // GlFont
 
+#ifdef __BORLANDC__
+template <> void cv::Ptr<cv::GlFont>::delete_obj()
+{
+    if (obj) delete obj;
+}
+#endif
+
 cv::GlFont::GlFont(const string& _family, int _height, Weight _weight, Style _style)
     : family_(_family), height_(_height), weight_(_weight), style_(_style), base_(0)
 {

@@ -134,4 +134,9 @@ void BaseImageEncoder::throwOnEror() const
 
 }
 
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::BaseImageDecoder>::delete_obj() {}
+template<> void cv::Ptr<cv::BaseImageEncoder>::delete_obj() {}
+#endif
+
 /* End of file. */

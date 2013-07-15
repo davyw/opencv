@@ -104,6 +104,13 @@ BaseFilter::BaseFilter() { ksize = Size(-1,-1); anchor = Point(-1,-1); }
 BaseFilter::~BaseFilter() {}
 void BaseFilter::reset() {}
 
+#ifdef __BORLANDC__
+template<> void Ptr< FilterEngine >::delete_obj() { }
+template<> void Ptr< BaseRowFilter >::delete_obj() { }
+template<> void Ptr< BaseColumnFilter >::delete_obj() { }
+template<> void Ptr< BaseFilter >::delete_obj() { }
+#endif
+
 FilterEngine::FilterEngine()
 {
     srcType = dstType = bufType = -1;

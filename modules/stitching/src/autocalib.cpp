@@ -196,3 +196,13 @@ bool calibrateRotatingCamera(const vector<Mat> &Hs, Mat &K)
 
 } // namespace detail
 } // namespace cv
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::detail::FeaturesFinder>::delete_obj() {}
+template<> void cv::Ptr<cv::detail::FeaturesMatcher>::delete_obj() {}
+template<> void cv::Ptr<cv::detail::BundleAdjusterBase>::delete_obj() {}
+template<> void cv::Ptr<cv::WarperCreator>::delete_obj() {}
+template<> void cv::Ptr<cv::detail::ExposureCompensator>::delete_obj() {}
+template<> void cv::Ptr<cv::detail::Blender>::delete_obj() {}
+template<> void cv::Ptr<cv::detail::SeamFinder>::delete_obj() {}
+#endif

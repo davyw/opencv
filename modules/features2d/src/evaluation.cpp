@@ -610,3 +610,8 @@ void cv::evaluateGenericDescriptorMatcher( const Mat& img1, const Mat& img2, con
 
     computeRecallPrecisionCurve( *matches1to2, *correctMatches1to2Mask, recallPrecisionCurve );
 }
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::GenericDescriptorMatcher>::delete_obj() {}
+#endif
+

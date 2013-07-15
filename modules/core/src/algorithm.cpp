@@ -380,6 +380,13 @@ void Algorithm::getParams(vector<string>& names) const
     info()->getParams(names);
 }
 
+#ifdef __BORLANDC__
+template <> void cv::Ptr<cv::Algorithm>::delete_obj()
+{
+    if (obj) delete obj;
+}
+#endif
+
 void Algorithm::write(FileStorage& fs) const
 {
     info()->write(this, fs);

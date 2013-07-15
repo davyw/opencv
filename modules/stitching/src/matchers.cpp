@@ -633,3 +633,7 @@ void BestOf2NearestMatcher::collectGarbage()
 
 } // namespace detail
 } // namespace cv
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::ORB>::delete_obj() {}
+#endif

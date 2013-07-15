@@ -1848,3 +1848,8 @@ Ptr<Detector> getDefaultLINEMOD()
 
 } // namespace linemod
 } // namespace cv
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::linemod::Modality>::delete_obj() {}
+template<> void cv::Ptr<cv::linemod::Detector>::delete_obj() {}
+#endif

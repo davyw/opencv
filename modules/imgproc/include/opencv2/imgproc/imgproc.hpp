@@ -525,6 +525,8 @@ private:
     Mat edges_, dx_, dy_;
 };
 
+template<> CV_EXPORTS void Ptr<GeneralizedHough>::delete_obj();
+
 //! erodes the image (applies the local minimum operator)
 CV_EXPORTS_W void erode( InputArray src, OutputArray dst, InputArray kernel,
                          Point anchor=Point(-1,-1), int iterations=1,
@@ -773,6 +775,8 @@ public:
     virtual void collectGarbage() = 0;
 };
 CV_EXPORTS Ptr<CLAHE> createCLAHE(double clipLimit = 40.0, Size tileGridSize = Size(8, 8));
+
+template<> CV_EXPORTS void Ptr<CLAHE>::delete_obj();
 
 CV_EXPORTS float EMD( InputArray signature1, InputArray signature2,
                       int distType, InputArray cost=noArray(),

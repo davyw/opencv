@@ -1575,3 +1575,7 @@ void PlanarObjectDetector::setVerbose(bool _verbose)
 }
 
 }
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::FernClassifier>::delete_obj() {}
+#endif

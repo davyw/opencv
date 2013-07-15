@@ -2611,10 +2611,12 @@ template<typename _Tp> inline void Ptr<_Tp>::release()
     obj = 0;
 }
 
+#ifndef __BORLANDC__
 template<typename _Tp> inline void Ptr<_Tp>::delete_obj()
 {
     if( obj ) delete obj;
 }
+#endif
 
 template<typename _Tp> inline Ptr<_Tp>::~Ptr() { release(); }
 

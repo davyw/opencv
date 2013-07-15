@@ -123,4 +123,6 @@ cvGetStarKeypoints( const CvArr* _img, CvMemStorage* storage,
     return seq;
 }
 
-
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::StarDetector>::delete_obj() {}
+#endif

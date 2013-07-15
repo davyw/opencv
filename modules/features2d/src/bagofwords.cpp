@@ -190,4 +190,9 @@ int BOWImgDescriptorExtractor::descriptorType() const
     return CV_32FC1;
 }
 
+#ifdef __BORLANDC__
+template<> void Ptr<DescriptorMatcher>::delete_obj() {}
+template<> void Ptr<DescriptorExtractor>::delete_obj() {}
+#endif
+
 }

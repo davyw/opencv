@@ -1326,4 +1326,13 @@ bool CascadeClassifier::read(const FileNode& root)
 template<> void Ptr<CvHaarClassifierCascade>::delete_obj()
 { cvReleaseHaarClassifierCascade(&obj); }
 
+#ifdef __BORLANDC__
+template<> void Ptr<linemod::QuantizedPyramid>::delete_obj() {}
+template<> void Ptr<FeatureEvaluator>::delete_obj() {}
+template<> void Ptr<std::vector<cv::HaarEvaluator::Feature, std::allocator<cv::HaarEvaluator::Feature> > >::delete_obj() {}
+template<> void Ptr<std::vector<cv::LBPEvaluator::Feature, std::allocator<cv::LBPEvaluator::Feature> > >::delete_obj() {}
+template<> void Ptr<std::vector<cv::HOGEvaluator::Feature, std::allocator<cv::HOGEvaluator::Feature> > >::delete_obj() {}
+template<> void Ptr<cv::CascadeClassifier::MaskGenerator>::delete_obj() {}
+#endif
+
 } // namespace cv

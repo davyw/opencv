@@ -348,3 +348,8 @@ void PyramidAdaptedFeatureDetector::detectImpl( const Mat& image, vector<KeyPoin
 
 
 }
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::FeatureDetector>::delete_obj() {}
+template<> void cv::Ptr<cv::AdjusterAdapter>::delete_obj() {}
+#endif

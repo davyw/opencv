@@ -2238,3 +2238,7 @@ BriskLayer::twothirdsample(const cv::Mat& srcimg, cv::Mat& dstimg)
 }
 
 }
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::FastFeatureDetector2>::delete_obj() {}
+#endif

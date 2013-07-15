@@ -216,3 +216,10 @@ bool cv::initModule_features2d(void)
 
     return all;
 }
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::flann::Index>::delete_obj() {}
+template<> void cv::Ptr<cv::flann::SearchParams>::delete_obj() {}
+template<> void cv::Ptr<cv::flann::IndexParams>::delete_obj() {}
+template<> void cv::Ptr<Feature2D>::delete_obj() {}
+#endif

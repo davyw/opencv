@@ -47,6 +47,15 @@
 #include "precomp.hpp"
 #include "opencv2/videostab/stabilizer.hpp"
 
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::videostab::ILog>::delete_obj() {}
+template<> void cv::Ptr<cv::videostab::IFrameSource>::delete_obj() {}
+template<> void cv::Ptr<cv::videostab::IGlobalMotionEstimator>::delete_obj() {}
+template<> void cv::Ptr<cv::videostab::DeblurerBase>::delete_obj() {}
+template<> void cv::Ptr<cv::videostab::MotionFilterBase>::delete_obj() {}
+template<> void cv::Ptr<cv::videostab::IMotionStabilizer>::delete_obj() {}
+#endif
+
 using namespace std;
 
 namespace cv

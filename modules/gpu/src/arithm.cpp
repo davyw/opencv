@@ -564,3 +564,12 @@ void cv::gpu::normalize(const GpuMat& src, GpuMat& dst, double a, double b, int 
 }
 
 #endif /* !defined (HAVE_CUDA) */
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::gpu::FilterEngine_GPU>::delete_obj() {}
+template<> void cv::Ptr<cv::gpu::BaseRowFilter_GPU>::delete_obj() {}
+template<> void cv::Ptr<cv::gpu::BaseColumnFilter_GPU>::delete_obj() {}
+template<> void cv::Ptr<cv::gpu::BaseFilter_GPU>::delete_obj() {}
+template<> void cv::Ptr<cv::gpu::GeneralizedHough_GPU>::delete_obj() {}
+template<> void cv::Ptr<cv::gpu::CLAHE>::delete_obj() {}
+#endif

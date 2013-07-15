@@ -1296,3 +1296,7 @@ void cv::GeneralizedHough::release()
     dy_.release();
     releaseImpl();
 }
+
+template<> void Ptr<GeneralizedHough>::delete_obj()
+{
+}

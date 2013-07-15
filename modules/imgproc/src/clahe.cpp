@@ -332,3 +332,8 @@ cv::Ptr<cv::CLAHE> cv::createCLAHE(double clipLimit, cv::Size tileGridSize)
 {
     return new CLAHE_Impl(clipLimit, tileGridSize.width, tileGridSize.height);
 }
+
+#ifdef __BORLANDC__
+template<> void cv::Ptr<cv::CLAHE>::delete_obj() {}
+#endif
+
