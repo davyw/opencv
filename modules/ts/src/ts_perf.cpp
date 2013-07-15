@@ -156,7 +156,7 @@ void Regression::init(const std::string& testSuitName, const std::string& ext)
 {
     if (!storageInPath.empty())
     {
-        LOGE("Subsequent initialisation of Regression utility is not allowed.");
+        LOGE("Subsequent initialisation of Regression utility is not allowed.", "");
         return;
     }
 
@@ -1072,20 +1072,20 @@ void TestBase::reportMetrics(bool toJUnitXML)
         switch (m.terminationReason)
         {
         case performance_metrics::TERM_ITERATIONS:
-            LOGD("termination reason:  reached maximum number of iterations");
+            LOGD("termination reason:  reached maximum number of iterations", "");
             break;
         case performance_metrics::TERM_TIME:
-            LOGD("termination reason:  reached time limit");
+            LOGD("termination reason:  reached time limit", "");
             break;
         case performance_metrics::TERM_INTERRUPT:
-            LOGD("termination reason:  aborted by the performance testing framework");
+            LOGD("termination reason:  aborted by the performance testing framework", "");
             break;
         case performance_metrics::TERM_EXCEPTION:
-            LOGD("termination reason:  unhandled exception");
+            LOGD("termination reason:  unhandled exception", "");
             break;
         case performance_metrics::TERM_UNKNOWN:
         default:
-            LOGD("termination reason:  unknown");
+            LOGD("termination reason:  unknown", "");
             break;
         };
 

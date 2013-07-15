@@ -3262,7 +3262,14 @@ static const char* const kReservedTestCaseAttributes[] = {
 
 template <int kSize>
 std::vector<std::string> ArrayAsVector(const char* const (&array)[kSize]) {
+  #ifdef __BORLANDC__
+  std::vector<std::string> v;
+  for (int i=0; i<kSize; i++)
+    v.push_back(std::string(array[i]));
+  return v;
+  #else
   return std::vector<std::string>(array, array + kSize);
+  #endif
 }
 
 static std::vector<std::string> GetReservedAttributesForElement(

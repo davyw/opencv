@@ -327,21 +327,6 @@ template<typename _Tp>
  }
 
 template<>
-bool CommandLineParser::get<bool>(const std::string& name, bool space_delete)
-{
-    std::string str_buf = getString(name);
-
-    if (space_delete && str_buf != "")
-    {
-        str_buf = del_space(str_buf);
-    }
-
-    if (str_buf == "true")
-        return true;
-
-    return false;
-}
-template<>
 std::string CommandLineParser::analyzeValue<std::string>(const std::string& str, bool space_delete)
 {
     if (space_delete)
@@ -380,3 +365,20 @@ double CommandLineParser::analyzeValue<double>(const std::string& str, bool /*sp
 {
     return fromStringNumber<double>(str);
 }
+
+template<>
+bool CommandLineParser::analyzeValue<bool>(const std::string& str, bool space_delete)
+{
+    if (space_delete)
+    {
+        if (del_space(str) == "true")
+            return true;
+    }
+    else
+    {
+        if (str == "true")
+            return true;
+    }
+    return false;
+}
+

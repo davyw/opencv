@@ -4214,7 +4214,11 @@ public:
     //! returns the currently observed element
     FileNode operator *() const;
     //! accesses the currently observed element methods
+    #ifdef __BORLANDC__
+    FileNode* operator ->() const;
+    #else
     FileNode operator ->() const;
+    #endif
 
     //! moves iterator to the next node
     FileNodeIterator& operator ++ ();
@@ -4753,9 +4757,6 @@ class CV_EXPORTS CommandLineParser
     };
 
 template<> CV_EXPORTS
-bool CommandLineParser::get<bool>(const std::string& name, bool space_delete);
-
-template<> CV_EXPORTS
 std::string CommandLineParser::analyzeValue<std::string>(const std::string& str, bool space_delete);
 
 template<> CV_EXPORTS
@@ -4773,6 +4774,8 @@ float CommandLineParser::analyzeValue<float>(const std::string& str, bool space_
 template<> CV_EXPORTS
 double CommandLineParser::analyzeValue<double>(const std::string& str, bool space_delete);
 
+template<> CV_EXPORTS
+bool CommandLineParser::analyzeValue<bool>(const std::string& str, bool space_delete);
 
 /////////////////////////////// Parallel Primitives //////////////////////////////////
 

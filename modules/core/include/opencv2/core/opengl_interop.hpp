@@ -241,9 +241,15 @@ private:
 /////////////////// Render Functions ///////////////////
 
 //! render texture rectangle in window
+#ifdef __BORLANDC__
+CV_EXPORTS void render(const Texture2D& tex,
+    Rect_<double> wndRect,
+    Rect_<double> texRect);
+#else
 CV_EXPORTS void render(const Texture2D& tex,
     Rect_<double> wndRect = Rect_<double>(0.0, 0.0, 1.0, 1.0),
     Rect_<double> texRect = Rect_<double>(0.0, 0.0, 1.0, 1.0));
+#endif
 
 //! render mode
 enum {
