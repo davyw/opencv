@@ -149,8 +149,10 @@ CV_IMPL double cvGetWindowProperty(const char* name, int prop_id)
     break;
 
     default:
-        return -1;
+        break;
     }
+
+    return -1;
 }
 
 void cv::namedWindow( const string& winname, int flags )
